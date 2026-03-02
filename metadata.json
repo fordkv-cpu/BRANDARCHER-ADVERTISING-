@@ -1,0 +1,8 @@
+{
+  "name": "BrandArcher Advertising - 360 Degree Agency",
+  "description": "A world-class 360-degree advertising agency website featuring cutting-edge design, portfolio grids, and an AI-powered campaign strategist.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
