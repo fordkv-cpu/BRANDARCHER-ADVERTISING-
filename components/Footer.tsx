@@ -24,33 +24,65 @@ const Footer: React.FC = () => {
                 ceo@brandarcher.in
                 <ArrowUpRight size={32} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
               </a>
-              <a href="tel:+919871700508" className="text-2xl md:text-4xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group">
-                +91-98-717-00-508
+              <a href="tel:+911204331507" className="text-2xl md:text-4xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group">
+                +91-120-4331507
                 <Phone size={32} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
               </a>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div>
-              <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-6">Headquarters</h4>
-              <ul className="space-y-6 text-sm">
-                <li>
-                  <p className="font-bold uppercase tracking-widest mb-1">Banda, India</p>
-                  <p className="text-zinc-500 mb-4">
-                    H 59, Tindwari,<br />
-                    Banda, Uttar Pradesh 210128
-                  </p>
-                  <a 
-                    href={googleMapsUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-red-600 hover:text-white transition-colors group"
-                  >
-                    View on Google Maps <MapPin size={12} className="group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </li>
-              </ul>
+            <div className="space-y-12">
+              <div>
+                <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-6">Headquarters</h4>
+                <ul className="space-y-6 text-sm">
+                  <li>
+                    <p className="font-bold uppercase tracking-widest mb-1">Banda, India</p>
+                    <p className="text-zinc-500 mb-4">
+                      H 59, Tindwari,<br />
+                      Banda, Uttar Pradesh 210128
+                    </p>
+                    <a 
+                      href={googleMapsUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-red-600 hover:text-white transition-colors group"
+                    >
+                      View on Google Maps <MapPin size={12} className="group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-6">Branch Offices</h4>
+                <div className="grid grid-cols-2 gap-y-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-1 bg-red-600"></div>
+                    <span className="font-bold uppercase tracking-widest text-[11px]">Lucknow</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-1 bg-red-600"></div>
+                    <span className="font-bold uppercase tracking-widest text-[11px]">Noida</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-1 bg-red-600"></div>
+                    <span className="font-bold uppercase tracking-widest text-[11px]">Ludhiana</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-1 bg-red-600"></div>
+                    <span className="font-bold uppercase tracking-widest text-[11px]">Vadodara</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-1 bg-red-600"></div>
+                    <span className="font-bold uppercase tracking-widest text-[11px]">Dehradun</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-1 bg-red-600"></div>
+                    <span className="font-bold uppercase tracking-widest text-[11px]">Mumbai</span>
+                  </div>
+                </div>
+              </div>
             </div>
             <div>
               <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-8">Social Ecosystem</h4>
