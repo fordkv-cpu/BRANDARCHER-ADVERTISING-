@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ArrowUpRight, Instagram, Twitter, Linkedin, Facebook, Phone, MapPin } from 'lucide-react';
+import VisitorCounter from './VisitorCounter';
 
 const Footer: React.FC = () => {
   const googleMapsUrl = "https://maps.app.goo.gl/iFhwBvofDKaBWnjr9";
@@ -52,52 +53,60 @@ const Footer: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-6">Social</h4>
-              <ul className="flex flex-col gap-4 text-lg">
-                <li>
-                  <a 
-                    href={instagramUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 hover:text-red-600 transition-colors"
-                  >
-                    <Instagram size={20} /> Instagram
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-3 hover:text-red-600 transition-colors">
-                    <Twitter size={20} /> Twitter
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href={linkedinUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex items-center gap-3 hover:text-red-600 transition-colors"
-                  >
-                    <Linkedin size={20} /> LinkedIn
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href={facebookUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 hover:text-red-600 transition-colors"
-                  >
-                    <Facebook size={20} /> Facebook
-                  </a>
-                </li>
-              </ul>
+              <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-8">Social Ecosystem</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <a 
+                  href={instagramUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Follow BrandArcher on Instagram"
+                  className="flex items-center gap-3 p-4 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
+                >
+                  <Instagram size={18} className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="text-xs font-black uppercase tracking-widest group-hover:text-white">Instagram</span>
+                </a>
+                <a 
+                  href="https://twitter.com/brandarcher" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Follow BrandArcher on Twitter"
+                  className="flex items-center gap-3 p-4 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
+                >
+                  <Twitter size={18} className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="text-xs font-black uppercase tracking-widest group-hover:text-white">Twitter</span>
+                </a>
+                <a 
+                  href={linkedinUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label="Connect with BrandArcher on LinkedIn"
+                  className="flex items-center gap-3 p-4 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
+                >
+                  <Linkedin size={18} className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="text-xs font-black uppercase tracking-widest group-hover:text-white">LinkedIn</span>
+                </a>
+                <a 
+                  href={facebookUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Follow BrandArcher on Facebook"
+                  className="flex items-center gap-3 p-4 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
+                >
+                  <Facebook size={18} className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="text-xs font-black uppercase tracking-widest group-hover:text-white">Facebook</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[10px] uppercase font-bold tracking-widest text-zinc-600">
-            © 2025 BRANDARCHER ADVERTISING. ALL RIGHTS RESERVED.
-          </p>
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <p className="text-[10px] uppercase font-bold tracking-widest text-zinc-600">
+              © 2025 BRANDARCHER ADVERTISING. ALL RIGHTS RESERVED.
+            </p>
+            <VisitorCounter />
+          </div>
           <div className="flex gap-8 text-[10px] uppercase font-bold tracking-widest text-zinc-600">
             <a href="#" className="hover:text-white">Privacy Policy</a>
             <a href="#" className="hover:text-white">Terms of Use</a>

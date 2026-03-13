@@ -8,20 +8,23 @@ import Testimonials from './components/Testimonials';
 import BriefGenerator from './components/BriefGenerator';
 import ChatWidget from './components/ChatWidget';
 import Portfolio from './components/Portfolio';
+import CreativeGallery from './components/CreativeGallery';
+import CricketMedia from './components/CricketMedia';
 import Footer from './components/Footer';
 import { SERVICES } from './constants';
-import { Target, Zap, Globe, Camera, Quote, Award, Linkedin, UserCheck, ShieldCheck } from 'lucide-react';
+import { Target, Zap, Globe, Camera, Quote, Award, Linkedin, UserCheck, ShieldCheck, Trophy } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   target: <Target size={32} />,
   zap: <Zap size={32} />,
   globe: <Globe size={32} />,
   camera: <Camera size={32} />,
+  trophy: <Trophy size={32} />,
 };
 
 const App: React.FC = () => { 
-  // Original picture provided by the user
-  const founderImage = "https://generativelanguage.googleapis.com/v1beta/blobs/hf:78e19e9102ca1692138c201886134b28f804561081b281f6d3381665e7149a46";
+  // Reliable professional portrait for the founder
+  const founderImage = "/images/Dheeraj.jpg";
 
   return (
     <div className="min-h-screen bg-black relative">
@@ -96,12 +99,13 @@ const App: React.FC = () => {
                   <div className="absolute -bottom-10 -left-10 w-40 h-40 border-b-2 border-l-2 border-zinc-100 -z-10" />
                   
                   {/* The Main Portrait Container */}
-                  <div className="relative aspect-[1/1.4] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.2)] group bg-zinc-100">
+                  <div className="relative aspect-[4/5] overflow-hidden shadow-2xl group bg-zinc-100">
                     {/* Natural original photo - No filters or changes applied to preserve the face exactly as requested */}
                     <img 
                       src={founderImage} 
                       alt="Dheeraj Kumar - Founder of BrandArcher" 
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
+                      referrerPolicy="no-referrer"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=1200";
@@ -152,6 +156,8 @@ const App: React.FC = () => {
         </section>
 
         <Portfolio />
+        <CricketMedia />
+        <CreativeGallery />
 
         <BrandMetrics />
         <NewsSection />

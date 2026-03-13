@@ -44,9 +44,13 @@ const BrandMetrics: React.FC = () => {
 
           <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-px bg-zinc-900 border border-zinc-900">
             {/* Global Visitors Card */}
-            <div className="bg-zinc-950 p-10 flex flex-col justify-between group">
+            <motion.div 
+              whileHover={{ scale: 1.03, backgroundColor: "rgba(18, 18, 21, 1)" }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-zinc-950 p-10 flex flex-col justify-between group cursor-default"
+            >
               <div className="flex justify-between items-start mb-8">
-                <div className="p-3 bg-red-600/10 text-red-600 rounded-sm">
+                <div className="p-3 bg-red-600/10 text-red-600 rounded-sm group-hover:bg-red-600 group-hover:text-white transition-colors duration-300">
                   <Users size={24} />
                 </div>
                 <div className="flex flex-col items-end">
@@ -55,17 +59,21 @@ const BrandMetrics: React.FC = () => {
                 </div>
               </div>
               <div>
-                <h4 className="text-5xl font-black tracking-tighter text-white mb-2">
+                <h4 className="text-5xl font-black tracking-tighter text-white mb-2 group-hover:text-red-600 transition-colors duration-300">
                   <Counter value={842903} />
                 </h4>
                 <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Total Global Visitors</p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Brand Authority */}
-            <div className="bg-zinc-950 p-10 flex flex-col justify-between group">
+            <motion.div 
+              whileHover={{ scale: 1.03, backgroundColor: "rgba(18, 18, 21, 1)" }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-zinc-950 p-10 flex flex-col justify-between group cursor-default"
+            >
               <div className="flex justify-between items-start mb-8">
-                <div className="p-3 bg-red-600/10 text-red-600 rounded-sm">
+                <div className="p-3 bg-red-600/10 text-red-600 rounded-sm group-hover:bg-red-600 group-hover:text-white transition-colors duration-300">
                   <Award size={24} />
                 </div>
                 <div className="flex flex-col items-end">
@@ -74,17 +82,21 @@ const BrandMetrics: React.FC = () => {
                 </div>
               </div>
               <div>
-                <h4 className="text-5xl font-black tracking-tighter text-white mb-2">
+                <h4 className="text-5xl font-black tracking-tighter text-white mb-2 group-hover:text-red-600 transition-colors duration-300">
                   98.2<span className="text-2xl text-red-600">%</span>
                 </h4>
                 <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Search Visibility Index</p>
               </div>
-            </div>
+            </motion.div>
 
             {/* India Market Dominance */}
-            <div className="bg-zinc-950 p-10 flex flex-col justify-between group">
+            <motion.div 
+              whileHover={{ scale: 1.03, backgroundColor: "rgba(18, 18, 21, 1)" }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-zinc-950 p-10 flex flex-col justify-between group cursor-default"
+            >
               <div className="flex justify-between items-start mb-8">
-                <div className="p-3 bg-red-600/10 text-red-600 rounded-sm">
+                <div className="p-3 bg-red-600/10 text-red-600 rounded-sm group-hover:bg-red-600 group-hover:text-white transition-colors duration-300">
                   <Globe size={24} />
                 </div>
                 <div className="flex flex-col items-end">
@@ -93,17 +105,21 @@ const BrandMetrics: React.FC = () => {
                 </div>
               </div>
               <div>
-                <h4 className="text-5xl font-black tracking-tighter text-white mb-2">
+                <h4 className="text-5xl font-black tracking-tighter text-white mb-2 group-hover:text-red-600 transition-colors duration-300">
                   <Counter value={512} suffix="k" />
                 </h4>
                 <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Domestic Indian Reach</p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Traffic Efficiency */}
-            <div className="bg-zinc-950 p-10 flex flex-col justify-between group">
+            <motion.div 
+              whileHover={{ scale: 1.03, backgroundColor: "rgba(18, 18, 21, 1)" }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-zinc-950 p-10 flex flex-col justify-between group cursor-default"
+            >
               <div className="flex justify-between items-start mb-8">
-                <div className="p-3 bg-red-600/10 text-red-600 rounded-sm">
+                <div className="p-3 bg-red-600/10 text-red-600 rounded-sm group-hover:bg-red-600 group-hover:text-white transition-colors duration-300">
                   <TrendingUp size={24} />
                 </div>
                 <div className="flex flex-col items-end">
@@ -112,12 +128,12 @@ const BrandMetrics: React.FC = () => {
                 </div>
               </div>
               <div>
-                <h4 className="text-5xl font-black tracking-tighter text-white mb-2">
+                <h4 className="text-5xl font-black tracking-tighter text-white mb-2 group-hover:text-red-600 transition-colors duration-300">
                   <Counter value={92} suffix="%" />
                 </h4>
                 <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Organic Traffic Retention</p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 

@@ -61,6 +61,21 @@ export const PROJECTS: Project[] = [
       author: "Vikram Singh",
       role: "Head of Brand, Nexa Motors"
     }
+  },
+  {
+    id: '5',
+    title: 'STADIUM DOMINATION OOH',
+    category: 'On-Ground Media',
+    industry: 'Sports & Entertainment',
+    imageUrl: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=1600',
+    description: '360-degree on-ground branding and media planning for major cricket tournaments.',
+    objectives: 'Maximize brand recall during high-stakes cricket matches through strategic perimeter and digital screen placements.',
+    results: 'Achieved 85% brand recall among stadium spectators and 200M+ TV impressions.',
+    testimonial: {
+      quote: "Their on-ground execution was flawless. They understood the energy of the game and matched it with their media strategy.",
+      author: "Amit Sharma",
+      role: "Sponsorship Lead, Premier League"
+    }
   }
 ];
 
@@ -82,6 +97,12 @@ export const SERVICES: Service[] = [
     title: '360 Media Buying',
     description: 'Precision-targeted placement across digital, social, OOH, and traditional channels.',
     icon: 'globe'
+  },
+  {
+    id: 'cricket',
+    title: 'Cricket OOH & On-Ground',
+    description: 'Surgical media planning for cricket stadiums, on-ground branding, and high-impact sports OOH.',
+    icon: 'trophy'
   },
   {
     id: 'production',

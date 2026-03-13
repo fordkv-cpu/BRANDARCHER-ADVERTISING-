@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { Sparkles, Loader2, Send, CheckCircle2 } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Sparkles, Loader2, Send, CheckCircle2, Image as ImageIcon, X } from 'lucide-react';
 import { generateCampaignStrategy } from '../services/geminiService';
 import { CampaignStrategy } from '../types';
 
@@ -8,19 +8,66 @@ const BriefGenerator: React.FC = () => {
   const [industry, setIndustry] = useState('');
   const [audience, setAudience] = useState('');
   const [goal, setGoal] = useState('');
+  const [image, setImage] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [strategy, setStrategy] = useState<CampaignStrategy | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setImageError(null);
+
+    if (file) {
+      // Limit to 5MB
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setImageError("File is too large. Maximum size is 5MB.");
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        setImageError("Please upload a valid image file.");
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadstart = () => setIsLoading(true);
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+        setIsLoading(false);
+      };
+      reader.onerror = () => {
+        setImageError("Failed to read image. Please try again.");
+        setIsLoading(false);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setImage(null);
+    setImageError(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!industry || !audience || !goal) return;
 
     setIsLoading(true);
+    setError(null);
     try {
-      const result = await generateCampaignStrategy(industry, audience, goal);
+      const result = await generateCampaignStrategy(industry, audience, goal, image || undefined);
       setStrategy(result);
-    } catch (error) {
-      alert("Failed to generate strategy. Please ensure your API key is configured correctly.");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to generate strategy. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -40,6 +87,11 @@ const BriefGenerator: React.FC = () => {
 
           {!strategy ? (
             <form onSubmit={handleSubmit} className="space-y-6 bg-black p-8 md:p-12 border border-zinc-800">
+              {error && (
+                <div className="bg-red-600/10 border border-red-600/20 text-red-500 p-4 text-xs font-bold uppercase tracking-widest mb-6">
+                  {error}
+                </div>
+              )}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">Your Industry</label>
@@ -72,6 +124,64 @@ const BriefGenerator: React.FC = () => {
                   className="w-full bg-zinc-900 border border-zinc-800 p-4 text-white focus:outline-none focus:border-red-600 transition-colors"
                 ></textarea>
               </div>
+
+              <div className="space-y-4">
+                <label className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 block">Inspiration Image (Optional)</label>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-6">
+                    {!image ? (
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="flex items-center gap-3 bg-zinc-900 border border-dashed border-zinc-700 p-6 text-zinc-500 hover:text-white hover:border-red-600 transition-all group w-full md:w-auto"
+                      >
+                        <ImageIcon size={24} className="group-hover:scale-110 transition-transform" />
+                        <span className="text-xs font-bold uppercase tracking-widest">Upload Moodboard</span>
+                      </button>
+                    ) : (
+                      <div className="relative w-32 h-32 group">
+                        <img src={image} alt="Inspiration" className="w-full h-full object-cover border border-zinc-800" />
+                        <button
+                          type="button"
+                          onClick={removeImage}
+                          className="absolute -top-2 -right-2 bg-red-600 text-white p-1.5 rounded-full shadow-lg hover:bg-white hover:text-black transition-all z-10"
+                          title="Remove image"
+                        >
+                          <X size={14} />
+                        </button>
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                          <span className="text-[8px] font-black uppercase text-white tracking-widest">Preview</span>
+                        </div>
+                      </div>
+                    )}
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleImageUpload}
+                      accept="image/*"
+                      className="hidden"
+                    />
+                    {image && (
+                      <div className="flex flex-col gap-1">
+                        <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Image uploaded for AI inspiration</p>
+                        <button 
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="text-[8px] text-red-500 uppercase font-black tracking-widest hover:underline text-left"
+                        >
+                          Change Image
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  {imageError && (
+                    <p className="text-[10px] text-red-500 font-bold uppercase tracking-widest animate-pulse">
+                      {imageError}
+                    </p>
+                  )}
+                </div>
+              </div>
+
               <button 
                 type="submit" 
                 disabled={isLoading}

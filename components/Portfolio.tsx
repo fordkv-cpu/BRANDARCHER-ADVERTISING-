@@ -9,31 +9,56 @@ const Portfolio: React.FC = () => {
   const [filter, setFilter] = useState<string>('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  // Dynamic Meta Tags Implementation
+  // Dynamic Meta Tags Implementation for SEO & Social Sharing
   useEffect(() => {
     if (selectedProject) {
-      // Store original values
+      // Store original values to restore them later
       const prevTitle = document.title;
-      const prevDescription = document.querySelector('meta[name="description"]')?.getAttribute('content');
+      const metaTags = [
+        { name: 'description', content: selectedProject.description },
+        { property: 'og:title', content: `${selectedProject.title} | ${selectedProject.industry} Case Study` },
+        { property: 'og:description', content: selectedProject.description },
+        { property: 'og:image', content: selectedProject.imageUrl },
+        { property: 'og:type', content: 'article' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: selectedProject.title },
+        { name: 'twitter:description', content: selectedProject.description },
+        { name: 'twitter:image', content: selectedProject.imageUrl }
+      ];
+
+      const originalTags: { element: HTMLMetaElement, attr: string, value: string | null }[] = [];
 
       // Update Title
       document.title = `${selectedProject.title} | ${selectedProject.industry} Case Study | BrandArcher`;
 
-      // Update Description
-      let metaDescription = document.querySelector('meta[name="description"]');
-      if (!metaDescription) {
-        metaDescription = document.createElement('meta');
-        metaDescription.setAttribute('name', 'description');
-        document.head.appendChild(metaDescription);
-      }
-      metaDescription.setAttribute('content', selectedProject.description);
+      // Update or Create Meta Tags
+      metaTags.forEach(tag => {
+        const selector = tag.name ? `meta[name="${tag.name}"]` : `meta[property="${tag.property}"]`;
+        let element = document.querySelector(selector) as HTMLMetaElement;
+        
+        if (element) {
+          originalTags.push({ element, attr: 'content', value: element.getAttribute('content') });
+          element.setAttribute('content', tag.content);
+        } else {
+          element = document.createElement('meta');
+          if (tag.name) element.setAttribute('name', tag.name);
+          if (tag.property) element.setAttribute('property', tag.property);
+          element.setAttribute('content', tag.content);
+          document.head.appendChild(element);
+          originalTags.push({ element, attr: 'remove', value: null });
+        }
+      });
 
       // Cleanup on close
       return () => {
         document.title = prevTitle;
-        if (prevDescription) {
-          metaDescription?.setAttribute('content', prevDescription);
-        }
+        originalTags.forEach(({ element, attr, value }) => {
+          if (attr === 'remove') {
+            document.head.removeChild(element);
+          } else if (value !== null) {
+            element.setAttribute('content', value);
+          }
+        });
       };
     }
   }, [selectedProject]);
@@ -106,7 +131,9 @@ const Portfolio: React.FC = () => {
                   <img 
                     src={project.imageUrl} 
                     alt={project.title} 
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                    referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                   <div className="absolute bottom-8 left-8">
@@ -158,7 +185,9 @@ const Portfolio: React.FC = () => {
                   <img 
                     src={selectedProject.imageUrl} 
                     alt={selectedProject.title} 
+                    loading="lazy"
                     className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
                 </div>

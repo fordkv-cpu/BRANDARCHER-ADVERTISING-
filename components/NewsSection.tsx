@@ -51,10 +51,17 @@ const NewsSection: React.FC = () => {
           {[...Array(3)].map((_, i) => (
             <div key={i} className="flex gap-12 items-center">
               {news.length > 0 ? news.map((item, idx) => (
-                <span key={idx} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-300">
+                <motion.span 
+                  key={idx} 
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ scale: 1.05, color: '#ffffff' }}
+                  transition={{ duration: 0.3 }}
+                  className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-300 cursor-default"
+                >
                   <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse" />
                   {item.title} • <span className="text-red-600 font-black">{item.source}</span>
-                </span>
+                </motion.span>
               )) : (
                 <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600 italic">Synchronizing live exhibition feed...</span>
               )}
@@ -150,7 +157,7 @@ const NewsSection: React.FC = () => {
         >
           <div className="h-[1px] w-24 bg-zinc-800 mb-4" />
           <p className="text-zinc-600 text-[10px] uppercase font-bold tracking-[0.3em] max-w-2xl leading-relaxed">
-            Automatic background sync enabled via Gemini Global Search. Tracking events from Campaign India, Afaqs, PIB, WPP, and International Exhibition Bureaus.
+            Automatic background sync enabled via Gemini Global Search. Tracking events from AdAge, Adweek, Campaign India, Afaqs, PIB, WPP, and International Exhibition Bureaus.
           </p>
         </motion.div>
       </div>

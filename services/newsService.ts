@@ -11,7 +11,9 @@ export const fetchIndustryNews = async (): Promise<NewsItem[]> => {
   2. Indian events and exhibitions (e.g., Goafest, AdAsia, Zee Melt, local trade shows, and Indian Advertising Association events).
   3. Government of India announcements regarding exhibitions or industry events.
   
-  Return a list of current news stories including the title, the specific source name (e.g. Campaign India, Afaqs, Exchange4media, PIB India), the direct URL to the article, and a 1-sentence summary.`;
+  Prioritize sources like AdAge, Adweek, Campaign India, Afaqs, Exchange4media, and PIB India.
+  
+  Return a list of current news stories including the title, the specific source name, the direct URL to the article, and a 1-sentence summary.`;
 
   try {
     const response = await ai.models.generateContent({

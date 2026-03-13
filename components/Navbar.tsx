@@ -18,9 +18,11 @@ const Navbar: React.FC = () => {
     { name: 'Metrics', href: '#metrics' },
     { name: 'Pulse', href: '#news' },
     { name: 'Services', href: '#services' },
+    { name: 'Cricket', href: '#cricket' },
     { name: 'Portfolio', href: '#portfolio' },
     { name: 'About', href: '#about' },
     { name: 'Strategist', href: '#strategist' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -81,13 +83,6 @@ const Navbar: React.FC = () => {
               {link.name}
             </a>
           ))}
-          <a 
-            href="#contact" 
-            onClick={(e) => handleNavClick(e, '#contact')}
-            className="text-4xl font-black uppercase tracking-tighter text-red-600 hover:text-white transition-colors"
-          >
-            Contact
-          </a>
         </div>
       )}
     </nav>
