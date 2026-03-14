@@ -40,6 +40,8 @@ const CricketMedia: React.FC = () => {
                   key={currentImageIndex}
                   src={stadiumImages[currentImageIndex]} 
                   alt="Indian Cricket Stadium Branding" 
+                  loading="lazy"
+                  decoding="async"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}

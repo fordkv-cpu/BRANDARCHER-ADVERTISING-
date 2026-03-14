@@ -121,6 +121,7 @@ const GalleryItem: React.FC<{
         src={item.url} 
         alt={item.title} 
         loading="lazy"
+        decoding="async"
         referrerPolicy="no-referrer"
         className="w-full h-full object-cover transition-all duration-1000 ease-out"
       />
@@ -496,6 +497,7 @@ const CreativeGallery: React.FC = () => {
                       src={galleryItems[selectedIdx].url} 
                       alt={galleryItems[selectedIdx].title}
                       loading="lazy"
+                      decoding="async"
                       className="max-h-[70vh] w-auto object-contain shadow-2xl border border-white/10"
                       referrerPolicy="no-referrer"
                     />

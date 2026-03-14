@@ -105,6 +105,8 @@ const App: React.FC = () => {
                       src={founderImage} 
                       alt="Dheeraj Kumar - Founder of BrandArcher" 
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
+                      loading="lazy"
+                      decoding="async"
                       referrerPolicy="no-referrer"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;

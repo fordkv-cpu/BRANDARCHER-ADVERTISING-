@@ -175,6 +175,7 @@ const Hero: React.FC = () => {
           src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=90&w=2400" 
           alt="BrandArcher Cinematic Background" 
           className="w-full h-full object-cover filter brightness-[0.4] contrast-[1.2] saturate-[0.8]"
+          decoding="async"
           referrerPolicy="no-referrer"
         />
         

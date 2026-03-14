@@ -132,6 +132,7 @@ const Portfolio: React.FC = () => {
                     src={project.imageUrl} 
                     alt={project.title} 
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
                     referrerPolicy="no-referrer"
                   />
@@ -186,6 +187,7 @@ const Portfolio: React.FC = () => {
                     src={selectedProject.imageUrl} 
                     alt={selectedProject.title} 
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
                   />
