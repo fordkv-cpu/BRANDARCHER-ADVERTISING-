@@ -18,6 +18,9 @@ const NewsSection: React.FC = () => {
       if (data && data.length > 0) {
         setNews(data);
         setLastUpdated(new Date());
+      } else if (news.length === 0) {
+        // If no news found and we don't have existing news, show a message
+        console.warn("No exhibition news found at the moment.");
       }
     } catch (err) {
       console.error("Failed to update news feed", err);
@@ -29,10 +32,10 @@ const NewsSection: React.FC = () => {
   useEffect(() => {
     getNews();
     
-    // Setup automatic refresh every 5 minutes (300000ms)
+    // Setup automatic refresh every 2 minutes (120000ms)
     timerRef.current = window.setInterval(() => {
       getNews();
-    }, 300000);
+    }, 120000);
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);

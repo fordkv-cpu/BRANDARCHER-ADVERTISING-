@@ -34,5 +34,5 @@ export interface NewsItem {
   source: string;
   url: string;
   summary: string;
-  category: 'Global' | 'Indian';
+  category: 'Global' | 'Indian' | 'Govt';
 }
