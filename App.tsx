@@ -24,7 +24,7 @@ const iconMap: Record<string, React.ReactNode> = {
 
 const App: React.FC = () => { 
   // Reliable professional portrait for the founder
-  const founderImage = "/images/Dheeraj.jpg";
+  const founderImage = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800";
 
   return (
     <div className="min-h-screen bg-black relative">

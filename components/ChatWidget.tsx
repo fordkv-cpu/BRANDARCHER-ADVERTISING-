@@ -100,8 +100,13 @@ const ChatWidget: React.FC = () => {
             {/* Strategist Profile Card */}
             <div className="bg-zinc-900/50 border-b border-zinc-800 p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-zinc-800 rounded-full flex items-center justify-center text-[10px] font-bold text-zinc-400">
-                  DK
+                <div className="w-10 h-10 rounded-full overflow-hidden border border-zinc-800 bg-zinc-800">
+                  <img 
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" 
+                    alt="Dheeraj Kumar"
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
                 <div>
                   <p className="text-[11px] font-black uppercase tracking-widest text-white">Dheeraj Kumar</p>
