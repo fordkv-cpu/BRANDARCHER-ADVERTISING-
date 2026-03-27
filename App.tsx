@@ -10,6 +10,7 @@ import ChatWidget from './components/ChatWidget';
 import Portfolio from './components/Portfolio';
 import CreativeGallery from './components/CreativeGallery';
 import CricketMedia from './components/CricketMedia';
+import WorldWatch from './components/WorldWatch';
 import Footer from './components/Footer';
 import { SERVICES } from './constants';
 import { Target, Zap, Globe, Camera, Quote, Award, Linkedin, UserCheck, ShieldCheck, Trophy } from 'lucide-react';
@@ -156,6 +157,8 @@ const App: React.FC = () => {
             ))}
           </div>
         </section>
+
+        <WorldWatch />
 
         <Portfolio />
         <CricketMedia />
