@@ -28,9 +28,9 @@ const CricketMedia: React.FC = () => {
   ];
 
   return (
-    <section id="cricket" className="bg-white text-black py-32 overflow-hidden">
+    <section id="cricket" className="bg-white text-black py-16 overflow-hidden">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           
           {/* Left Column: Visual Impact */}
           <div className="relative order-2 lg:order-1">
@@ -81,14 +81,14 @@ const CricketMedia: React.FC = () => {
             </div>
             
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-4 mt-8">
+            <div className="grid grid-cols-2 gap-3 mt-4">
               {stats.map((stat, index) => (
                 <motion.div 
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-zinc-50 p-6 border-l-4 border-red-600"
+                  className="bg-zinc-50 p-4 border-l-4 border-red-600"
                 >
                   <div className="text-red-600 mb-2">{stat.icon}</div>
                   <div className="text-2xl font-black uppercase tracking-tighter">{stat.value}</div>
@@ -100,18 +100,18 @@ const CricketMedia: React.FC = () => {
 
           {/* Right Column: Narrative */}
           <div className="order-1 lg:order-2">
-            <div className="flex items-center gap-4 mb-8">
+            <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-[2px] bg-red-600"></div>
               <span className="text-red-600 text-xs font-black tracking-[0.5em] uppercase">Sports Media</span>
             </div>
             
-            <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.8] mb-12">
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[0.8] mb-6">
               On-Ground <br /> 
               <span className="text-zinc-200">Cricket</span> <br />
               <span className="text-red-600">OOH</span>
             </h2>
             
-            <div className="space-y-8 text-lg md:text-xl leading-relaxed text-zinc-700 font-light">
+            <div className="space-y-4 text-sm md:text-base leading-relaxed text-zinc-700 font-light">
               <p>
                 Cricket isn't just a sport in India; it's a religion. At BrandArcher, we treat on-ground media planning with the same reverence and <span className="font-black text-black">surgical precision</span> as a championship final.
               </p>

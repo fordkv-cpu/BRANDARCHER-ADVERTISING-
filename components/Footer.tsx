@@ -10,23 +10,23 @@ const Footer: React.FC = () => {
   const instagramUrl = "https://www.instagram.com/fordkv0508?igsh=N2pxcHJmYm02ZDFw";
 
   return (
-    <footer id="contact" className="bg-black text-white pt-32 pb-12 border-t border-zinc-900">
+    <footer id="contact" className="bg-black text-white pt-16 pb-8 border-t border-zinc-900">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
           <div>
-            <h2 className="text-[10vw] lg:text-[7vw] font-black uppercase leading-[0.85] tracking-tighter mb-12">
+            <h2 className="text-[8vw] lg:text-[5vw] font-black uppercase leading-[0.85] tracking-tighter mb-6">
               Let's <br />
               <span className="text-outline">Build</span> <br />
               Future
             </h2>
-            <div className="flex flex-col gap-6">
-              <a href="mailto:ceo@brandarcher.in" className="text-2xl md:text-4xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group break-all">
+            <div className="flex flex-col gap-4">
+              <a href="mailto:ceo@brandarcher.in" className="text-xl md:text-2xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group break-all">
                 ceo@brandarcher.in
-                <ArrowUpRight size={32} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
+                <ArrowUpRight size={24} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
               </a>
-              <a href="tel:+911204331507" className="text-2xl md:text-4xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group">
+              <a href="tel:+911204331507" className="text-xl md:text-2xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group">
                 +91-120-4331507
-                <Phone size={32} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
+                <Phone size={24} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
               </a>
             </div>
           </div>
@@ -86,46 +86,46 @@ const Footer: React.FC = () => {
             </div>
             <div>
               <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-8">Social Ecosystem</h4>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <a 
                   href={instagramUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   aria-label="Follow BrandArcher on Instagram"
-                  className="flex items-center gap-3 p-4 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
+                  className="flex items-center gap-2 p-2 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
                 >
-                  <Instagram size={18} className="text-zinc-500 group-hover:text-white transition-colors" />
-                  <span className="text-xs font-black uppercase tracking-widest group-hover:text-white">Instagram</span>
+                  <Instagram size={16} className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-white">Instagram</span>
                 </a>
                 <a 
                   href="https://twitter.com/brandarcher" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   aria-label="Follow BrandArcher on Twitter"
-                  className="flex items-center gap-3 p-4 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
+                  className="flex items-center gap-2 p-2 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
                 >
-                  <Twitter size={18} className="text-zinc-500 group-hover:text-white transition-colors" />
-                  <span className="text-xs font-black uppercase tracking-widest group-hover:text-white">Twitter</span>
+                  <Twitter size={16} className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-white">Twitter</span>
                 </a>
                 <a 
                   href={linkedinUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label="Connect with BrandArcher on LinkedIn"
-                  className="flex items-center gap-3 p-4 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
+                  className="flex items-center gap-2 p-2 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
                 >
-                  <Linkedin size={18} className="text-zinc-500 group-hover:text-white transition-colors" />
-                  <span className="text-xs font-black uppercase tracking-widest group-hover:text-white">LinkedIn</span>
+                  <Linkedin size={16} className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-white">LinkedIn</span>
                 </a>
                 <a 
                   href={facebookUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   aria-label="Follow BrandArcher on Facebook"
-                  className="flex items-center gap-3 p-4 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
+                  className="flex items-center gap-2 p-2 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
                 >
-                  <Facebook size={18} className="text-zinc-500 group-hover:text-white transition-colors" />
-                  <span className="text-xs font-black uppercase tracking-widest group-hover:text-white">Facebook</span>
+                  <Facebook size={16} className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-white">Facebook</span>
                 </a>
               </div>
             </div>

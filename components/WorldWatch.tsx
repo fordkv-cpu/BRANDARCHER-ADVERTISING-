@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Globe } from 'lucide-react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Cpu, Activity, Shield, Zap, ChevronRight, ChevronLeft, Wifi, Terminal, Sun, Moon, Sunrise, Sunset } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface Country {
   name: string;
@@ -22,9 +22,26 @@ const countries: Country[] = [
   { name: 'Italy', timezone: 'Europe/Rome', colors: ['#009246', '#FFFFFF', '#CE2B37'], flag: '🇮🇹' },
 ];
 
+type TimeOfDay = 'Morning' | 'Afternoon' | 'Evening' | 'Night';
+
+const getTimeOfDay = (hours: number): TimeOfDay => {
+  if (hours >= 6 && hours < 12) return 'Morning';
+  if (hours >= 12 && hours < 17) return 'Afternoon';
+  if (hours >= 17 && hours < 20) return 'Evening';
+  return 'Night';
+};
+
+const timeOfDayConfig: Record<TimeOfDay, { color: string, glow: string, label: string, icon: React.ReactNode }> = {
+  Morning: { color: '#00f3ff', glow: 'shadow-[0_0_20px_rgba(0,243,255,0.5)]', label: 'MORNING / DAY', icon: <Sunrise size={16} /> },
+  Afternoon: { color: '#ffea00', glow: 'shadow-[0_0_20px_rgba(255,234,0,0.5)]', label: 'AFTERNOON', icon: <Sun size={16} /> },
+  Evening: { color: '#ff00ff', glow: 'shadow-[0_0_20px_rgba(255,0,255,0.5)]', label: 'EVENING', icon: <Sunset size={16} /> },
+  Night: { color: '#ff003c', glow: 'shadow-[0_0_20px_rgba(255,0,60,0.5)]', label: 'NIGHT', icon: <Moon size={16} /> }
+};
+
 const WorldWatch: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);
   const [time, setTime] = useState(new Date());
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -42,188 +59,214 @@ const WorldWatch: React.FC = () => {
   };
 
   const localTime = getLocalTime(time, selectedCountry.timezone);
-  const seconds = localTime.getSeconds();
-  const minutes = localTime.getMinutes();
   const hours = localTime.getHours();
-
-  const secondDegrees = (seconds / 60) * 360;
-  const minuteDegrees = (minutes / 60) * 360 + (seconds / 60) * 6;
-  const hourDegrees = (hours % 12 / 12) * 360 + (minutes / 60) * 30;
-
-  const getClockBackground = (colors: string[]) => {
-    if (colors.length === 3) {
-      return `linear-gradient(180deg, ${colors[0]}22 0%, ${colors[1]}22 50%, ${colors[2]}22 100%)`;
-    }
-    if (colors.length === 2) {
-      return `linear-gradient(180deg, ${colors[0]}22 0%, ${colors[1]}22 100%)`;
-    }
-    return `${colors[0]}22`;
-  };
+  const timeOfDay = getTimeOfDay(hours);
+  const config = timeOfDayConfig[timeOfDay];
 
   return (
-    <section id="world-watch" className="py-32 bg-[#0A0A0A] text-white overflow-hidden border-t border-zinc-900 font-mono">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-20">
+    <section id="world-watch" className="py-12 bg-black text-white overflow-hidden border-t border-zinc-900 font-mono relative">
+      {/* Cyberpunk Grid Overlay */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none" 
+           style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        
+        {/* HUD Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-red-600 animate-pulse" />
+              <span className="text-red-600 text-[8px] font-black uppercase tracking-[0.4em]">System_Archer_v4.0</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none italic">
+              Global <span className="text-zinc-800">HUD</span>
+            </h2>
+          </div>
           
-          {/* Hardware Widget Clock */}
-          <div className="flex-1 flex justify-center items-center relative">
-            {/* Ambient Glow */}
-            <div className="absolute -z-10 w-[140%] h-[140%] bg-red-600/5 blur-[150px] rounded-full" />
-            
-            {/* Outer Hardware Ring */}
-            <div className="relative w-80 h-80 md:w-[450px] md:h-[450px] rounded-full p-1 bg-[#151619] shadow-[0_40px_100px_rgba(0,0,0,0.8),inset_0_2px_10px_rgba(255,255,255,0.05)] border border-zinc-800">
-              
-              {/* Technical Markings Ring */}
-              <div className="absolute inset-0 rounded-full border border-dashed border-zinc-700/30 m-8" />
-              
-              {/* Inner Display Area */}
-              <div className="w-full h-full rounded-full bg-[#0D0E10] relative overflow-hidden flex items-center justify-center border border-zinc-800/50">
-                
-                {/* Dynamic Flag Gradient Overlay */}
-                <div 
-                  className="absolute inset-0 opacity-40 transition-all duration-1000"
-                  style={{ background: getClockBackground(selectedCountry.colors) }}
-                />
-
-                {/* Technical Grid */}
-                <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-
-                {/* Clock Face Markings */}
-                {[...Array(60)].map((_, i) => (
-                  <div 
-                    key={i} 
-                    className={`absolute ${i % 5 === 0 ? 'w-[2px] h-4 bg-zinc-400' : 'w-[1px] h-2 bg-zinc-700'}`}
-                    style={{
-                      left: '50%',
-                      top: '4%',
-                      transformOrigin: '50% 1150%',
-                      transform: `translateX(-50%) rotate(${i * 6}deg)`
-                    }}
-                  />
-                ))}
-
-                {/* Center Hardware Hub */}
-                <div className="absolute w-12 h-12 rounded-full bg-[#1A1B1E] border border-zinc-700 shadow-2xl z-40 flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-red-600 shadow-[0_0_10px_#ef4444]" />
-                </div>
-
-                {/* Hands - Technical Style */}
-                {/* Hour Hand */}
-                <motion.div 
-                  className="absolute left-1/2 bottom-1/2 w-1.5 h-[28%] bg-white rounded-t-full origin-bottom z-20"
-                  animate={{ rotate: hourDegrees }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-                  style={{ translateX: '-50%' }}
-                />
-                {/* Minute Hand */}
-                <motion.div 
-                  className="absolute left-1/2 bottom-1/2 w-1 h-[38%] bg-zinc-400 rounded-t-full origin-bottom z-20"
-                  animate={{ rotate: minuteDegrees }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-                  style={{ translateX: '-50%' }}
-                />
-                {/* Second Hand - Needle Style */}
-                <motion.div 
-                  className="absolute left-1/2 bottom-1/2 w-[1px] h-[45%] bg-red-600 origin-bottom z-30"
-                  animate={{ rotate: secondDegrees }}
-                  transition={{ type: 'linear', duration: 0 }}
-                  style={{ translateX: '-50%' }}
-                >
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-red-600" />
-                </motion.div>
-
-                {/* Digital Readout Inside Clock */}
-                <div className="absolute bottom-24 left-1/2 -translate-x-1/2 text-center">
-                  <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 mb-1">Local Sync</p>
-                  <p className="text-2xl font-black tracking-tighter text-white">
-                    {localTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                  </p>
-                </div>
+          <div className="flex gap-2">
+            <div className="px-3 py-1 bg-zinc-900/50 border border-zinc-800 rounded-sm flex items-center gap-2">
+              <Activity size={12} className="text-cyan-400" />
+              <div className="flex flex-col">
+                <span className="text-[7px] text-zinc-500 uppercase">Latency</span>
+                <span className="text-[10px] font-bold text-cyan-400">0.003ms</span>
               </div>
+            </div>
+            <div className="px-3 py-1 bg-zinc-900/50 border border-zinc-800 rounded-sm flex items-center gap-2">
+              <Shield size={12} className="text-green-500" />
+              <div className="flex flex-col">
+                <span className="text-[7px] text-zinc-500 uppercase">Security</span>
+                <span className="text-[10px] font-bold text-green-500">Encrypted</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-              {/* Outer Status Indicators */}
-              <div className="absolute top-10 left-1/2 -translate-x-1/2 flex gap-2">
-                <div className="w-1 h-1 rounded-full bg-red-600 animate-pulse" />
-                <div className="w-1 h-1 rounded-full bg-zinc-800" />
-                <div className="w-1 h-1 rounded-full bg-zinc-800" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          {/* Main HUD Display */}
+          <div className="lg:col-span-8 relative">
+            <div className="relative bg-zinc-950/80 border-2 border-zinc-800 p-6 md:p-8 rounded-lg overflow-hidden group">
+              {/* Corner Brackets */}
+              <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-red-600" />
+              <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-red-600" />
+              <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-red-600" />
+              <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-red-600" />
+
+              {/* Scanning Line Animation */}
+              <motion.div 
+                className="absolute left-0 w-full h-[2px] bg-red-600/20 z-10 pointer-events-none"
+                animate={{ top: ['0%', '100%'] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+              />
+
+              <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+                {/* Digital Clock Readout */}
+                <div className="flex-1 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-sm bg-zinc-900 border border-zinc-800 flex items-center justify-center text-lg">
+                      {selectedCountry.flag}
+                    </div>
+                    <div>
+                      <p className="text-[8px] text-zinc-500 uppercase tracking-widest">Selected_Node</p>
+                      <h3 className="text-xl font-black uppercase tracking-tighter text-white">{selectedCountry.name}</h3>
+                    </div>
+                  </div>
+
+                  <div className="relative">
+                    <motion.p 
+                      key={localTime.getSeconds()}
+                      initial={{ opacity: 0.8 }}
+                      animate={{ opacity: 1 }}
+                      className="text-6xl md:text-8xl font-black tracking-tighter leading-none select-none"
+                      style={{ color: config.color, textShadow: `0 0 20px ${config.color}44` }}
+                    >
+                      {localTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                      <span className="text-xl md:text-2xl ml-2 opacity-50">
+                        {localTime.getSeconds().toString().padStart(2, '0')}
+                      </span>
+                    </motion.p>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-zinc-900">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-zinc-900/30 border border-zinc-800 rounded-sm">
+                      <div className={`w-2 h-2 rounded-full ${config.glow} animate-pulse`} style={{ backgroundColor: config.color }} />
+                      <div className="flex flex-col">
+                        <span className="text-[7px] text-zinc-500 uppercase tracking-widest">Time_Phase</span>
+                        <span className="text-[10px] font-black tracking-widest flex items-center gap-1" style={{ color: config.color }}>
+                          {config.icon}
+                          {config.label}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Terminal size={14} className="text-zinc-600" />
+                      <span className="text-[10px] text-zinc-600 uppercase tracking-widest">Sync_Status: Active</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Technical Data Sidebar */}
+                <div className="w-full md:w-40 space-y-4">
+                  <div className="space-y-1">
+                    <p className="text-[8px] text-zinc-500 uppercase tracking-widest">Data_Stream</p>
+                    <div className="h-16 w-full bg-zinc-900/50 border border-zinc-800 p-1 overflow-hidden">
+                      <div className="flex flex-col gap-0.5">
+                        {[...Array(6)].map((_, i) => (
+                          <motion.div 
+                            key={i}
+                            className="h-0.5 bg-cyan-400/30"
+                            animate={{ width: [`${Math.random() * 100}%`, `${Math.random() * 100}%`] }}
+                            transition={{ duration: 0.5, repeat: Infinity }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <p className="text-[8px] text-zinc-500 uppercase tracking-widest">Flag_Signature</p>
+                    <div className="flex h-8 border border-zinc-800">
+                      {selectedCountry.colors.map((c, i) => (
+                        <div key={i} className="flex-1 h-full" style={{ backgroundColor: c }} />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-red-600/5 border border-red-600/20 rounded-sm">
+                    <p className="text-[8px] text-red-600 uppercase font-black mb-1 tracking-widest">Warning</p>
+                    <p className="text-[9px] text-zinc-500 leading-tight">Creative output exceeding safety thresholds.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Technical Selection Panel */}
-          <div className="flex-1 space-y-12">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="px-2 py-1 bg-red-600/10 border border-red-600/20 text-red-600 text-[10px] font-bold uppercase tracking-widest">
-                  System Active
-                </div>
-                <div className="h-[1px] flex-1 bg-zinc-800" />
-              </div>
-              
-              <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
-                Global <br /> <span className="text-zinc-700">Chronograph</span>
-              </h2>
-              
-              <div className="p-6 bg-[#151619] border border-zinc-800 rounded-lg relative overflow-hidden group">
-                <div className="absolute top-0 left-0 w-1 h-full bg-red-600" />
-                <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-light">
-                  <span className="text-white font-bold">// ARCHER_OS:</span> Real-time synchronization across our global creative hubs. Each node represents a strategic surgical point in our worldwide network.
-                </p>
+          {/* Node Selection Sidebar */}
+          <div className="lg:col-span-4 space-y-4">
+            <div className="flex items-center justify-between px-2">
+              <span className="text-[10px] text-zinc-500 uppercase tracking-widest">Available_Nodes</span>
+              <div className="flex gap-2">
+                <div className="w-1 h-1 bg-cyan-400" />
+                <div className="w-1 h-1 bg-cyan-400" />
+                <div className="w-1 h-1 bg-zinc-800" />
               </div>
             </div>
-            
-            <div className="grid grid-cols-2 gap-2">
-              {countries.map((country) => (
-                <button
-                  key={country.name}
-                  onClick={() => setSelectedCountry(country)}
-                  className={`group relative flex items-center gap-4 p-4 transition-all duration-300 border ${
-                    selectedCountry.name === country.name 
-                      ? 'bg-[#1A1B1E] border-zinc-700 shadow-xl' 
-                      : 'bg-transparent border-transparent hover:bg-zinc-900/50'
-                  }`}
-                >
-                  <div className={`w-1 h-8 transition-all duration-300 ${selectedCountry.name === country.name ? 'bg-red-600' : 'bg-zinc-800 group-hover:bg-zinc-700'}`} />
-                  
-                  <div className="flex-1 text-left">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{country.name}</span>
-                      <span className="text-lg grayscale group-hover:grayscale-0 transition-all">{country.flag}</span>
+
+            <div className="space-y-1 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+              {countries.map((country) => {
+                const cTime = getLocalTime(time, country.timezone);
+                const isActive = selectedCountry.name === country.name;
+
+                return (
+                  <button
+                    key={country.name}
+                    onClick={() => setSelectedCountry(country)}
+                    className={`w-full group relative flex items-center justify-between p-3 border transition-all duration-300 ${
+                      isActive 
+                        ? 'bg-zinc-900 border-red-600/50 shadow-[0_0_15px_rgba(220,38,38,0.1)]' 
+                        : 'bg-zinc-950/50 border-zinc-800 hover:border-zinc-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`text-lg transition-all ${isActive ? 'scale-110 grayscale-0' : 'grayscale opacity-50'}`}>{country.flag}</span>
+                      <div className="text-left">
+                        <p className={`text-[8px] font-black uppercase tracking-widest ${isActive ? 'text-red-600' : 'text-zinc-500'}`}>{country.name}</p>
+                        <p className={`text-lg font-black tracking-tighter ${isActive ? 'text-white' : 'text-zinc-700'}`}>
+                          {cTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
+                        </p>
+                      </div>
                     </div>
-                    <p className={`text-xl font-black tracking-tighter ${selectedCountry.name === country.name ? 'text-white' : 'text-zinc-600'}`}>
-                      {new Date().toLocaleTimeString('en-US', { timeZone: country.timezone, hour: '2-digit', minute: '2-digit', hour12: false })}
-                    </p>
-                  </div>
-
-                  {selectedCountry.name === country.name && (
-                    <motion.div 
-                      layoutId="active-indicator"
-                      className="absolute right-4 w-1.5 h-1.5 rounded-full bg-red-600 shadow-[0_0_8px_#ef4444]"
-                    />
-                  )}
-                </button>
-              ))}
-            </div>
-
-            {/* Footer Stats */}
-            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-zinc-900">
-              <div>
-                <p className="text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Latency</p>
-                <p className="text-sm font-bold text-zinc-400">0.02ms</p>
-              </div>
-              <div>
-                <p className="text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Status</p>
-                <p className="text-sm font-bold text-green-500">Encrypted</p>
-              </div>
-              <div>
-                <p className="text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Nodes</p>
-                <p className="text-sm font-bold text-zinc-400">10/10</p>
-              </div>
+                    
+                    {isActive && (
+                      <motion.div 
+                        layoutId="node-active"
+                        className="w-1 h-8 bg-red-600"
+                      />
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
         </div>
       </div>
+
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #000;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #333;
+          border-radius: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #444;
+        }
+      `}</style>
     </section>
   );
 };

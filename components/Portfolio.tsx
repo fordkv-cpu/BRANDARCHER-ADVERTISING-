@@ -3,11 +3,64 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
-import { X, ArrowRight, Quote } from 'lucide-react';
+import { X, ArrowRight, Quote, Share2, Twitter, Linkedin, Facebook, Copy, Check } from 'lucide-react';
 
 const Portfolio: React.FC = () => {
   const [filter, setFilter] = useState<string>('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
+
+  useEffect(() => {
+    setShowShareMenu(false);
+  }, [selectedProject]);
+
+  const handleCopy = () => {
+    if (!selectedProject) return;
+    const shareUrl = `${window.location.origin}${window.location.pathname}#project-${selectedProject.id}`;
+    navigator.clipboard.writeText(shareUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const shareLinks = [
+    { 
+      name: 'Twitter', 
+      icon: <Twitter size={16} />, 
+      url: (url: string, title: string) => `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}` 
+    },
+    { 
+      name: 'LinkedIn', 
+      icon: <Linkedin size={16} />, 
+      url: (url: string, title: string) => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}` 
+    },
+    { 
+      name: 'Facebook', 
+      icon: <Facebook size={16} />, 
+      url: (url: string) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}` 
+    }
+  ];
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#project-')) {
+      const id = hash.replace('#project-', '');
+      const project = PROJECTS.find(p => p.id === id);
+      if (project) {
+        setSelectedProject(project);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedProject) {
+      window.location.hash = `project-${selectedProject.id}`;
+    } else {
+      if (window.location.hash.startsWith('#project-')) {
+        window.history.pushState("", document.title, window.location.pathname + window.location.search);
+      }
+    }
+  }, [selectedProject]);
 
   // Dynamic Meta Tags Implementation for SEO & Social Sharing
   useEffect(() => {
@@ -70,13 +123,13 @@ const Portfolio: React.FC = () => {
     : PROJECTS.filter(p => p.industry === filter);
 
   return (
-    <section id="portfolio" className="bg-zinc-950 py-32 relative overflow-hidden">
+    <section id="portfolio" className="bg-zinc-950 py-16 relative overflow-hidden">
       {/* Background Accents */}
       <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-red-600/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-zinc-800/10 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="mb-20">
+        <div className="mb-10">
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -90,13 +143,13 @@ const Portfolio: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-12"
+            className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-6"
           >
             360° <br /> <span className="text-outline">Campaigns</span>
           </motion.h2>
 
           {/* Filter Bar */}
-          <div className="flex flex-wrap gap-4 border-b border-zinc-800 pb-8">
+          <div className="flex flex-wrap gap-4 border-b border-zinc-800 pb-4">
             {industries.map((industry) => (
               <button
                 key={industry}
@@ -114,7 +167,7 @@ const Portfolio: React.FC = () => {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => (
               <motion.div
@@ -141,7 +194,7 @@ const Portfolio: React.FC = () => {
                     <span className="text-red-600 text-[10px] font-black uppercase tracking-widest mb-2 block">
                       {project.industry}
                     </span>
-                    <h3 className="text-3xl font-black uppercase tracking-tighter text-white group-hover:text-red-600 transition-colors">
+                    <h3 className="text-xl font-black uppercase tracking-tighter text-white group-hover:text-red-600 transition-colors">
                       {project.title}
                     </h3>
                   </div>
@@ -195,33 +248,76 @@ const Portfolio: React.FC = () => {
                 </div>
 
                 {/* Modal Right: Content */}
-                <div className="w-full md:w-1/2 p-8 md:p-16 overflow-y-auto custom-scrollbar">
+                <div className="w-full md:w-1/2 p-6 md:p-8 overflow-y-auto custom-scrollbar">
                   <span className="text-red-600 text-xs font-black tracking-[0.4em] uppercase mb-4 block">
                     Case Study: {selectedProject.industry}
                   </span>
-                  <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none mb-8">
+                  <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tighter leading-none mb-6">
                     {selectedProject.title}
                   </h3>
+
+                  {/* Share Section */}
+                  <div className="flex flex-wrap items-center gap-4 mb-8">
+                    <button 
+                      onClick={() => setShowShareMenu(!showShareMenu)}
+                      className="flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-red-600 text-white text-[10px] font-black uppercase tracking-widest transition-all rounded-sm"
+                    >
+                      <Share2 size={14} />
+                      Share Project
+                    </button>
+
+                    <AnimatePresence>
+                      {showShareMenu && (
+                        <motion.div 
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -10 }}
+                          className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 p-1 rounded-sm"
+                        >
+                          {shareLinks.map((link) => (
+                            <a
+                              key={link.name}
+                              href={link.url(`${window.location.origin}${window.location.pathname}#project-${selectedProject.id}`, selectedProject.title)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all rounded-sm"
+                              title={`Share on ${link.name}`}
+                            >
+                              {link.icon}
+                            </a>
+                          ))}
+                          <div className="w-[1px] h-6 bg-zinc-800 mx-1" />
+                          <button
+                            onClick={handleCopy}
+                            className="w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all rounded-sm"
+                            title="Copy Link"
+                          >
+                            {copied ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                   
-                  <div className="space-y-12">
+                  <div className="space-y-8">
                     <div>
                       <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-4 border-l-2 border-red-600 pl-4">The Objective</h4>
-                      <p className="text-zinc-300 text-lg leading-relaxed font-light">
+                      <p className="text-zinc-300 text-sm leading-relaxed font-light">
                         {selectedProject.objectives}
                       </p>
                     </div>
 
                     <div>
                       <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-4 border-l-2 border-red-600 pl-4">The Impact</h4>
-                      <p className="text-zinc-300 text-lg leading-relaxed font-light">
+                      <p className="text-zinc-300 text-sm leading-relaxed font-light">
                         {selectedProject.results}
                       </p>
                     </div>
 
                     {selectedProject.testimonial && (
-                      <div className="bg-zinc-800/50 p-8 border-t border-zinc-800">
-                        <Quote className="text-red-600 mb-6 opacity-40" size={32} />
-                        <p className="text-xl font-black italic text-white leading-tight mb-6">
+                      <div className="bg-zinc-800/50 p-6 border-t border-zinc-800">
+                        <Quote className="text-red-600 mb-4 opacity-40" size={24} />
+                        <p className="text-lg font-black italic text-white leading-tight mb-4">
                           "{selectedProject.testimonial.quote}"
                         </p>
                         <div className="flex items-center gap-4">

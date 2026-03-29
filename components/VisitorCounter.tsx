@@ -111,14 +111,14 @@ const VisitorCounter: React.FC = () => {
   if (count === null) return null;
 
   return (
-    <div className="flex items-center gap-3 px-4 py-2 bg-zinc-900/50 border border-zinc-800 rounded-full">
+    <div className="flex items-center gap-3 px-3 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-full">
       <div className="relative">
         <Users size={14} className="text-red-600" />
         <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full border-2 border-black animate-pulse" />
       </div>
       <div className="flex flex-col">
-        <span className="text-[14px] font-black text-white leading-none">{count.toLocaleString()}</span>
-        <span className="text-[8px] font-bold uppercase tracking-widest text-zinc-500">Live Visitors</span>
+        <span className="text-[12px] font-black text-white leading-none">{count.toLocaleString()}</span>
+        <span className="text-[7px] font-bold uppercase tracking-widest text-zinc-500">Live Visitors</span>
       </div>
     </div>
   );

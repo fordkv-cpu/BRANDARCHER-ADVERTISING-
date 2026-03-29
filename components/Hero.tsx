@@ -196,9 +196,9 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, letterSpacing: "0.2em" }}
           animate={{ opacity: 1, letterSpacing: "0.6em" }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="inline-block mb-12"
+          className="inline-block mb-6"
         >
-          <span className="text-[10px] md:text-[12px] font-black uppercase text-red-600 border-x border-red-600 px-6 py-1">
+          <span className="text-[10px] md:text-[11px] font-black uppercase text-red-600 border-x border-red-600 px-4 py-1">
             BrandArcher Advertising
           </span>
         </motion.div>
@@ -213,7 +213,7 @@ const Hero: React.FC = () => {
               initial="hidden"
               animate="visible"
               variants={itemVariants}
-              className="block text-[12vw] md:text-[8vw] font-black leading-[0.9] tracking-tighter uppercase text-white"
+              className="block text-[10vw] md:text-[6vw] font-black leading-[0.9] tracking-tighter uppercase text-white"
             >
               Precision
             </motion.span>
@@ -225,7 +225,7 @@ const Hero: React.FC = () => {
               initial="hidden"
               animate="visible"
               variants={itemVariants}
-              className="block text-[12vw] md:text-[8vw] font-black leading-[0.9] tracking-tighter uppercase text-outline opacity-40"
+              className="block text-[10vw] md:text-[6vw] font-black leading-[0.9] tracking-tighter uppercase text-outline opacity-40"
             >
               Meets
             </motion.span>
@@ -237,7 +237,7 @@ const Hero: React.FC = () => {
               initial="hidden"
               animate="visible"
               variants={itemVariants}
-              className="block text-[12vw] md:text-[8vw] font-black leading-[0.9] tracking-tighter uppercase text-red-600 drop-shadow-[0_0_30px_rgba(220,38,38,0.3)]"
+              className="block text-[10vw] md:text-[6vw] font-black leading-[0.9] tracking-tighter uppercase text-red-600 drop-shadow-[0_0_30px_rgba(220,38,38,0.3)]"
             >
               Disruption
             </motion.span>
@@ -248,18 +248,18 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl mx-auto mt-16"
+          className="max-w-3xl mx-auto mt-8"
         >
-          <h2 className="text-lg md:text-2xl font-light text-zinc-400 mb-10 uppercase tracking-[0.3em] leading-relaxed">
+          <h2 className="text-base md:text-xl font-light text-zinc-400 mb-6 uppercase tracking-[0.3em] leading-relaxed">
             Leading <span className="text-white font-black italic">360° ADVERTISING COMPANY</span>
           </h2>
           
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
             <motion.button 
               whileHover={{ scale: 1.05, backgroundColor: "#dc2626", color: "#fff" }}
               whileTap={{ scale: 0.95 }}
               onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-white text-black px-12 py-5 font-black uppercase tracking-widest text-xs transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+              className="bg-white text-black px-10 py-3 font-black uppercase tracking-widest text-[10px] transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
             >
               Explore Portfolio
             </motion.button>
@@ -268,7 +268,7 @@ const Hero: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowConfig(true)}
               disabled={isVideoLoading}
-              className="border border-white/10 text-white px-12 py-5 font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all duration-300 backdrop-blur-md flex items-center gap-3 disabled:opacity-50"
+              className="border border-white/10 text-white px-10 py-3 font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all duration-300 backdrop-blur-md flex items-center gap-3 disabled:opacity-50"
             >
               {isVideoLoading ? (
                 <Loader2 className="animate-spin" size={16} />

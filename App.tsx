@@ -35,43 +35,43 @@ const App: React.FC = () => {
         <Hero />
         
         {/* About Section (Our DNA) - Premium Founder Spotlight */}
-        <section id="about" className="bg-white text-black py-32 md:py-48 overflow-hidden">
+        <section id="about" className="bg-white text-black py-16 md:py-24 overflow-hidden">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 items-center">
               
               {/* Left Column: Visionary Narrative */}
               <div className="lg:col-span-7 order-2 lg:order-1">
-                <div className="flex items-center gap-4 mb-8">
+                <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-[2px] bg-red-600"></div>
                   <span className="text-red-600 text-xs font-black tracking-[0.5em] uppercase">The Visionary</span>
                 </div>
                 
-                <h2 className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.8] mb-12 relative">
+                <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[0.8] mb-6 relative">
                   Dheeraj <br /> 
                   <span className="text-zinc-200 block md:ml-20">Kumar</span>
-                  <span className="absolute -top-10 -left-10 text-[18rem] text-zinc-50 font-black -z-10 select-none opacity-50">DK</span>
+                  <span className="absolute -top-10 -left-10 text-[12rem] text-zinc-50 font-black -z-10 select-none opacity-50">DK</span>
                 </h2>
                 
-                <div className="space-y-8 text-xl md:text-2xl leading-relaxed text-zinc-700 font-light max-w-2xl relative">
+                <div className="space-y-4 text-sm md:text-base leading-relaxed text-zinc-700 font-light max-w-2xl relative">
                   <p className="relative z-10">
                     At BrandArcher Advertising, we don't just follow trends—we architect them. Under my leadership, we champion <span className="font-black text-black underline decoration-red-600 decoration-4 underline-offset-8">Targeted Anarchy</span>. 
                   </p>
-                  <p className="text-lg text-zinc-500">
+                  <p className="text-sm text-zinc-500">
                     It is the calculated intersection of strategic surgical precision and unapologetic creative disruption. We find the bullseye in every market and hit it with impact that resonates across every channel.
                   </p>
                   
-                  <div className="pt-12 mt-12 border-t border-zinc-100">
+                  <div className="pt-6 mt-6 border-t border-zinc-100">
                     <div className="flex flex-col md:flex-row md:items-start gap-10">
                       <div className="flex-1">
-                        <Quote className="text-red-600 mb-6 opacity-40" size={40} />
-                        <p className="text-2xl md:text-3xl font-black italic text-black leading-tight tracking-tight mb-6">
+                        <Quote className="text-red-600 mb-6 opacity-40" size={32} />
+                        <p className="text-lg md:text-xl font-black italic text-black leading-tight tracking-tight mb-6">
                           "Precision is the foundation of disruption. My mission is to ensure your brand leaves an permanent mark."
                         </p>
                         <div className="flex items-center gap-4">
                            <div className="w-16 h-[1px] bg-zinc-300"></div>
                            <div>
-                             <p className="text-xl font-black uppercase tracking-widest text-black">Founder & CEO</p>
-                             <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-red-600 mt-1">BrandArcher Advertising</p>
+                             <p className="text-sm font-black uppercase tracking-widest text-black">Founder & CEO</p>
+                             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-600 mt-1">BrandArcher Advertising</p>
                            </div>
                         </div>
                       </div>
@@ -127,9 +127,9 @@ const App: React.FC = () => {
                   </div>
                   
                   {/* Founder Nameplate Overlay */}
-                  <div className="absolute -bottom-12 -left-12 bg-black p-10 md:p-14 text-white shadow-[40px_40px_100px_rgba(0,0,0,0.5)] border-l-[12px] border-red-600">
+                  <div className="absolute -bottom-12 -left-12 bg-black p-6 md:p-8 text-white shadow-[40px_40px_100px_rgba(0,0,0,0.5)] border-l-[12px] border-red-600">
                     <span className="text-red-600 text-[11px] font-black uppercase tracking-[0.6em] mb-3 block">Chief Architect</span>
-                    <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none">Dheeraj <br /> Kumar</h3>
+                    <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none">Dheeraj <br /> Kumar</h3>
                   </div>
                 </div>
               </div>
@@ -139,20 +139,20 @@ const App: React.FC = () => {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="bg-black py-32 border-y border-zinc-900">
-          <div className="container mx-auto px-6 text-center mb-24">
+        <section id="services" className="bg-black py-16 border-y border-zinc-900">
+          <div className="container mx-auto px-6 text-center mb-12">
             <span className="text-red-600 text-xs font-black tracking-widest uppercase mb-4 block">Capabilities</span>
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">360° Expertise</h2>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none">360° Expertise</h2>
           </div>
           
           <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-900 border border-zinc-900">
             {SERVICES.map((service) => (
-              <div key={service.id} className="bg-black p-12 hover:bg-zinc-950 transition-colors group cursor-default">
+              <div key={service.id} className="bg-black p-6 hover:bg-zinc-950 transition-colors group cursor-default">
                 <div className="text-red-600 mb-10 group-hover:scale-110 transition-transform">
                   {iconMap[service.icon]}
                 </div>
-                <h3 className="text-xl font-black uppercase tracking-widest mb-6">{service.title}</h3>
-                <p className="text-zinc-500 text-sm leading-relaxed">{service.description}</p>
+                <h3 className="text-base font-black uppercase tracking-widest mb-6">{service.title}</h3>
+                <p className="text-zinc-500 text-xs leading-relaxed">{service.description}</p>
               </div>
             ))}
           </div>

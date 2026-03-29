@@ -73,19 +73,19 @@ const ChatWidget: React.FC = () => {
             initial={{ opacity: 0, y: 20, scale: 0.95, transformOrigin: 'bottom right' }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[350px] md:w-[400px] h-[580px] bg-zinc-950 border border-zinc-800 shadow-2xl flex flex-col overflow-hidden rounded-sm"
+            className="mb-4 w-[300px] md:w-[350px] h-[500px] bg-zinc-950 border border-zinc-800 shadow-2xl flex flex-col overflow-hidden rounded-sm"
           >
             {/* Header */}
-            <div className="bg-red-600 p-4 flex justify-between items-center">
+            <div className="bg-red-600 p-3 flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-black flex items-center justify-center rounded-sm">
-                  <Bot className="text-red-600" size={20} />
+                <div className="w-8 h-8 bg-black flex items-center justify-center rounded-sm">
+                  <Bot className="text-red-600" size={16} />
                 </div>
                 <div>
-                  <h3 className="text-white text-sm font-black uppercase tracking-widest">Archer AI</h3>
+                  <h3 className="text-white text-xs font-black uppercase tracking-widest">Archer AI</h3>
                   <div className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                    <span className="text-[10px] text-white/70 font-bold uppercase">Strategic Support</span>
+                    <span className="text-[9px] text-white/70 font-bold uppercase">Strategic Support</span>
                   </div>
                 </div>
               </div>
@@ -93,14 +93,14 @@ const ChatWidget: React.FC = () => {
                 onClick={() => setIsOpen(false)}
                 className="text-white/80 hover:text-white transition-colors"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
             {/* Strategist Profile Card */}
-            <div className="bg-zinc-900/50 border-b border-zinc-800 p-4 flex items-center justify-between">
+            <div className="bg-zinc-900/50 border-b border-zinc-800 p-3 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden border border-zinc-800 bg-zinc-800">
+                <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-800 bg-zinc-800">
                   <img 
                     src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=200" 
                     alt="Dheeraj Kumar"
@@ -109,8 +109,8 @@ const ChatWidget: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <p className="text-[11px] font-black uppercase tracking-widest text-white">Dheeraj Kumar</p>
-                  <p className="text-[9px] text-zinc-500 font-bold uppercase">Lead Strategist</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white">Dheeraj Kumar</p>
+                  <p className="text-[8px] text-zinc-500 font-bold uppercase">Lead Strategist</p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -118,16 +118,16 @@ const ChatWidget: React.FC = () => {
                   href={linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white w-8 h-8 rounded-full transition-colors shadow-lg shadow-blue-600/20"
+                  className="flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white w-7 h-7 rounded-full transition-colors shadow-lg shadow-blue-600/20"
                   title="LinkedIn Profile"
                 >
-                  <Linkedin size={14} />
+                  <Linkedin size={12} />
                 </a>
                 <button 
                   onClick={() => openWhatsApp()}
-                  className="flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest transition-colors shadow-lg shadow-green-600/20"
+                  className="flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-2.5 py-1 rounded-full text-[8px] font-black uppercase tracking-widest transition-colors shadow-lg shadow-green-600/20"
                 >
-                  <Phone size={10} /> WhatsApp
+                  <Phone size={8} /> WhatsApp
                 </button>
               </div>
             </div>
@@ -135,14 +135,14 @@ const ChatWidget: React.FC = () => {
             {/* Messages Area */}
             <div 
               ref={scrollRef}
-              className="flex-1 overflow-y-auto p-4 space-y-4 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat opacity-95"
+              className="flex-1 overflow-y-auto p-3 space-y-3 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat opacity-95"
             >
               {messages.map((msg) => (
                 <div 
                   key={msg.id} 
                   className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[85%] p-3 text-sm ${
+                  <div className={`max-w-[85%] p-2.5 text-xs ${
                     msg.sender === 'user' 
                     ? 'bg-red-600 text-white rounded-l-md rounded-tr-md shadow-lg shadow-red-600/10' 
                     : 'bg-zinc-900 text-zinc-300 border border-zinc-800 rounded-r-md rounded-tl-md'
@@ -151,12 +151,12 @@ const ChatWidget: React.FC = () => {
                     {msg.sender === 'bot' && msg.id !== '1' && (
                        <button 
                         onClick={() => openWhatsApp(`Re: ${msg.text}`)}
-                        className="mt-3 flex items-center gap-2 text-[10px] font-black uppercase text-green-500 hover:text-green-400 transition-colors"
+                        className="mt-2 flex items-center gap-2 text-[9px] font-black uppercase text-green-500 hover:text-green-400 transition-colors"
                        >
-                         Discuss on WhatsApp <ExternalLink size={10} />
+                         Discuss on WhatsApp <ExternalLink size={9} />
                        </button>
                     )}
-                    <div className={`text-[9px] mt-1 opacity-50 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                    <div className={`text-[8px] mt-1 opacity-50 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
                       {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>
@@ -176,7 +176,7 @@ const ChatWidget: React.FC = () => {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 border-t border-zinc-800 bg-black">
+            <div className="p-3 border-t border-zinc-800 bg-black">
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -184,23 +184,23 @@ const ChatWidget: React.FC = () => {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Ask a question..."
-                  className="flex-1 bg-zinc-900 border border-zinc-800 px-4 py-2 text-sm text-white focus:outline-none focus:border-red-600 transition-colors"
+                  className="flex-1 bg-zinc-900 border border-zinc-800 px-3 py-1.5 text-xs text-white focus:outline-none focus:border-red-600 transition-colors"
                 />
                 <button 
                   onClick={handleSend}
                   className="bg-red-600 text-white p-2 hover:bg-white hover:text-black transition-all"
                 >
-                  <Send size={18} />
+                  <Send size={16} />
                 </button>
               </div>
-              <div className="mt-3 flex flex-col items-center gap-2">
+              <div className="mt-2 flex flex-col items-center gap-1.5">
                 <button 
                   onClick={() => openWhatsApp(inputValue)}
-                  className="w-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 py-2 text-[10px] font-black uppercase tracking-widest text-zinc-300 hover:text-green-500 transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 py-1.5 text-[9px] font-black uppercase tracking-widest text-zinc-300 hover:text-green-500 transition-all flex items-center justify-center gap-2"
                 >
-                  <Phone size={12} className="text-green-500" /> Send via WhatsApp
+                  <Phone size={10} className="text-green-500" /> Send via WhatsApp
                 </button>
-                <p className="text-[8px] font-bold uppercase tracking-widest text-zinc-600">
+                <p className="text-[7px] font-bold uppercase tracking-widest text-zinc-600">
                   Direct Line to Dheeraj Kumar: +91-9871700508
                 </p>
               </div>
@@ -212,18 +212,18 @@ const ChatWidget: React.FC = () => {
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative flex items-center gap-3 bg-red-600 hover:bg-white text-white hover:text-black px-6 py-4 rounded-full shadow-[0_10px_40px_rgba(220,38,38,0.4)] transition-all duration-500 transform hover:scale-105 active:scale-95 overflow-hidden"
+        className="group relative flex items-center gap-3 bg-red-600 hover:bg-white text-white hover:text-black px-4 py-3 rounded-full shadow-[0_10px_40px_rgba(220,38,38,0.4)] transition-all duration-500 transform hover:scale-105 active:scale-95 overflow-hidden"
       >
         <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
         <span className="relative z-10">
-          {isOpen ? <X size={20} /> : <MessageCircle size={20} />}
+          {isOpen ? <X size={18} /> : <MessageCircle size={18} />}
         </span>
         <div className="relative z-10 flex flex-col items-start leading-none">
-          <span className="text-[10px] font-black uppercase tracking-[0.2em]">
-            {isOpen ? 'Close' : 'WhatsApp Chat with us'}
+          <span className="text-[9px] font-black uppercase tracking-[0.2em]">
+            {isOpen ? 'Close' : 'WhatsApp Chat'}
           </span>
           {!isOpen && (
-            <span className="text-[8px] font-bold uppercase tracking-widest opacity-70 mt-0.5">
+            <span className="text-[7px] font-bold uppercase tracking-widest opacity-70 mt-0.5">
               Strategist Online
             </span>
           )}

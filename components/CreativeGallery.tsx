@@ -90,7 +90,7 @@ const GalleryItem: React.FC<{
       transition={{ delay: idx * 0.1, duration: 0.8 }}
       className={`relative group overflow-hidden cursor-none bg-zinc-900 ${
         item.size === 'large' ? 'md:col-span-8' : 'md:col-span-4'
-      } h-[400px] md:h-[600px]`}
+      } h-[300px] md:h-[450px]`}
     >
       <AnimatePresence>
         {!isLoaded && (
@@ -129,7 +129,7 @@ const GalleryItem: React.FC<{
       {/* Refined Gradient Overlay for Text Legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10" />
       
-      <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 z-20">
+      <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 z-20">
         <div className="overflow-hidden mb-2">
           <motion.p 
             initial={{ y: "100%" }}
@@ -318,9 +318,9 @@ const CreativeGallery: React.FC = () => {
   }, [selectedIdx]);
 
   return (
-    <section id="gallery" className="bg-black py-32 overflow-hidden">
+    <section id="gallery" className="bg-black py-16 overflow-hidden">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col mb-20">
+        <div className="flex flex-col mb-10">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -334,7 +334,7 @@ const CreativeGallery: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-6"
+            className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-6"
           >
             Spatial <br /> <span className="text-outline text-white/10">Innovations</span>
           </motion.h2>
@@ -342,7 +342,7 @@ const CreativeGallery: React.FC = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-zinc-500 text-lg max-w-2xl font-light leading-relaxed"
+            className="text-zinc-500 text-sm max-w-2xl font-light leading-relaxed"
           >
             A definitive showcase of the <span className="text-white font-bold">Hello Basmati Rice</span> trade pavilion. 
             Engineered for high-visibility and maximum brand flow in international exhibition halls.
@@ -506,10 +506,10 @@ const CreativeGallery: React.FC = () => {
                   {!isVideoLoading && !videoUrl && (
                     <div className="mt-10 text-center max-w-2xl">
                       <p className="text-red-600 text-[10px] font-black uppercase tracking-[0.4em] mb-4">Project Spotlight</p>
-                      <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mb-6">
+                      <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-white mb-6">
                         {galleryItems[selectedIdx].title}
                       </h3>
-                      <p className="text-zinc-400 text-lg font-light leading-relaxed">
+                      <p className="text-zinc-400 text-sm font-light leading-relaxed">
                         {galleryItems[selectedIdx].detail}
                       </p>
                     </div>
@@ -523,7 +523,7 @@ const CreativeGallery: React.FC = () => {
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="mt-32 p-12 bg-zinc-950 border border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-12"
+          className="mt-16 p-8 bg-zinc-950 border border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-12"
         >
           <div className="max-w-xl">
             <h4 className="text-2xl font-black uppercase tracking-tighter mb-4 text-white">Visual Specifications</h4>
