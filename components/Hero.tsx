@@ -277,6 +277,16 @@ const Hero: React.FC = () => {
               )}
               Generate Promo
             </motion.button>
+            <motion.a 
+              href="/company-profile.pdf"
+              download
+              whileHover={{ scale: 1.05, backgroundColor: "#fff", color: "#000" }}
+              whileTap={{ scale: 0.95 }}
+              className="border border-red-600/30 text-red-600 px-10 py-3 font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-md flex items-center gap-3"
+            >
+              <Download size={16} />
+              Download Profile
+            </motion.a>
           </div>
         </motion.div>
       </motion.div>

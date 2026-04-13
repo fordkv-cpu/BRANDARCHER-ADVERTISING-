@@ -56,6 +56,15 @@ const Navbar: React.FC = () => {
             </a>
           ))}
           <a 
+            key="profile"
+            href="/company-profile.pdf"
+            download
+            className="text-[9px] font-black uppercase tracking-[0.2em] text-red-600 hover:text-white transition-colors relative group"
+          >
+            Profile
+            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-red-600 transition-all group-hover:w-full"></span>
+          </a>
+          <a 
             href="#contact" 
             onClick={(e) => handleNavClick(e, '#contact')}
             className="bg-white text-black px-6 py-2 text-[9px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-red-600 hover:text-white transition-all transform hover:-translate-y-1"
