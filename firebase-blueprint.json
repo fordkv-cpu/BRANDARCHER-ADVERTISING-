@@ -11,12 +11,44 @@
         }
       },
       "required": ["visitorCount"]
+    },
+    "YoutubeSettings": {
+      "title": "YouTube Settings",
+      "description": "Configuration for daily featured video and automatic YouTube channel live feed sync",
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "string",
+          "description": "YouTube Channel ID to fetch latest daily uploads from"
+        },
+        "manualVideoId": {
+          "type": "string",
+          "description": "Optional manually specified YouTube video ID to feature"
+        },
+        "mode": {
+          "type": "string",
+          "description": "Mode of operation: 'auto' for automatic channel sync, or 'manual' for direct link override"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when configuration was last updated"
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "Email of the administrator who made the update"
+        }
+      },
+      "required": ["mode", "updatedAt", "updatedBy"]
     }
   },
   "firestore": {
     "stats/global": {
       "schema": "SiteStats",
       "description": "Global site statistics document"
+    },
+    "settings/youtube": {
+      "schema": "YoutubeSettings",
+      "description": "Dynamic YouTube channel feed and live video settings"
     }
   }
 }

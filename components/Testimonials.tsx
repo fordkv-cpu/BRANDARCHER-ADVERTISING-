@@ -29,7 +29,7 @@ const Testimonials: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="flex flex-col items-center text-center mb-24">
           <span className="text-red-600 text-xs font-black tracking-widest uppercase mb-4 block">Endorsements</span>
-          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-8">Client Love</h2>
+          <h2 className="text-5xl md:text-9xl font-display font-bold uppercase tracking-tighter leading-none mb-10">Client Love</h2>
           <div className="flex items-center gap-2 mb-4">
             <div className="flex gap-1">
               {[...Array(5)].map((_, i) => (

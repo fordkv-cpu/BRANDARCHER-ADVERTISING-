@@ -8,22 +8,29 @@ import { NewsItem } from '../types';
 const NewsSection: React.FC = () => {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const timerRef = useRef<number | null>(null);
 
   const getNews = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await fetchIndustryNews();
       if (data && data.length > 0) {
         setNews(data);
         setLastUpdated(new Date());
       } else if (news.length === 0) {
-        // If no news found and we don't have existing news, show a message
+        setError("No live exhibition data available at this moment. Synchronizing with fallback intelligence.");
         console.warn("No exhibition news found at the moment.");
       }
-    } catch (err) {
-      console.error("Failed to update news feed", err);
+    } catch (err: any) {
+      console.error("Failed to update news feed:", {
+        message: err.message,
+        stack: err.stack,
+        timestamp: new Date().toISOString()
+      });
+      setError("Intelligence sync interrupted. Please check your connection or try again later.");
     } finally {
       setLoading(false);
     }
@@ -47,8 +54,8 @@ const NewsSection: React.FC = () => {
       {/* Live Exhibition Ticker */}
       <div className="bg-red-600/5 border-y border-red-600/20 py-4 mb-20 overflow-hidden whitespace-nowrap relative">
         <motion.div 
-          animate={{ x: [0, -1000] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+          animate={{ x: [0, -2000] }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
           className="flex gap-12 items-center"
         >
           {[...Array(3)].map((_, i) => (
@@ -60,13 +67,13 @@ const NewsSection: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   whileHover={{ scale: 1.05, color: '#ffffff' }}
                   transition={{ duration: 0.3 }}
-                  className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-300 cursor-default"
+                  className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-zinc-300 cursor-default"
                 >
                   <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse" />
                   {item.title} • <span className="text-red-600 font-black">{item.source}</span>
                 </motion.span>
               )) : (
-                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600 italic">Synchronizing live exhibition feed...</span>
+                <span className="text-xs font-black uppercase tracking-wider text-zinc-600 italic">Synchronizing live exhibition feed...</span>
               )}
             </div>
           ))}
@@ -83,14 +90,14 @@ const NewsSection: React.FC = () => {
             <div className="flex items-center gap-2 mb-4">
               <div className="flex items-center gap-1 bg-red-600 px-2 py-0.5 rounded-sm">
                 <Radio size={12} className="text-white animate-pulse" />
-                <span className="text-[9px] font-black uppercase tracking-tighter text-white">Live Feed</span>
+                <span className="text-xs font-black uppercase tracking-tighter text-white">Live Feed</span>
               </div>
-              <span className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest">
+              <span className="text-zinc-500 text-xs font-bold uppercase tracking-wider">
                 Last Sync: {lastUpdated.toLocaleTimeString()}
               </span>
             </div>
-            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
-              Exhibition <br /> <span className="text-outline">Intelligence</span>
+            <h2 className="text-5xl md:text-9xl font-display font-bold uppercase tracking-tighter leading-none">
+              Industry <br /> <span className="text-outline">Intelligence</span>
             </h2>
           </motion.div>
           
@@ -106,7 +113,21 @@ const NewsSection: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <AnimatePresence mode='popLayout'>
-            {loading && news.length === 0 ? (
+            {error && news.length === 0 ? (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="col-span-full py-20 text-center border border-dashed border-zinc-800 bg-zinc-950/50"
+              >
+                <p className="text-red-600 text-xs font-black uppercase tracking-wider mb-4">{error}</p>
+                <button 
+                  onClick={getNews}
+                  className="text-xs font-black uppercase tracking-wider text-white underline decoration-red-600 underline-offset-4 hover:text-red-600 transition-colors"
+                >
+                  Retry Intelligence Sync
+                </button>
+              </motion.div>
+            ) : loading && news.length === 0 ? (
               [...Array(8)].map((_, i) => (
                 <div key={i} className="h-72 bg-zinc-900/50 animate-pulse border border-zinc-800" />
               ))
@@ -127,7 +148,7 @@ const NewsSection: React.FC = () => {
                     <div className="flex justify-between items-center mb-4">
                       <div className="flex items-center gap-2">
                         <MapPin size={10} className="text-red-600" />
-                        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">
+                        <span className="text-xs font-black uppercase tracking-wider text-zinc-500">
                           {item.category}
                         </span>
                       </div>
@@ -142,7 +163,7 @@ const NewsSection: React.FC = () => {
                   </div>
                   
                   <div className="mt-6 pt-4 border-t border-zinc-900 flex justify-between items-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-zinc-600">
+                    <span className="text-xs font-black uppercase tracking-wider text-zinc-600">
                       {item.source}
                     </span>
                     <ExternalLink size={12} className="text-zinc-800 group-hover:text-white" />
@@ -159,8 +180,8 @@ const NewsSection: React.FC = () => {
           className="mt-16 flex flex-col items-center text-center gap-4"
         >
           <div className="h-[1px] w-24 bg-zinc-800 mb-4" />
-          <p className="text-zinc-600 text-[10px] uppercase font-bold tracking-[0.3em] max-w-2xl leading-relaxed">
-            Automatic background sync enabled via Gemini Global Search. Tracking events from AdAge, Adweek, Campaign India, Afaqs, PIB, WPP, and International Exhibition Bureaus.
+          <p className="text-zinc-600 text-xs uppercase font-bold tracking-wider max-w-2xl leading-relaxed">
+            Automatic background sync enabled via Gemini Global Search. Tracking updates from CBC, DAVP, MIB, INS, Campaign India, Exchange4media, and Global Ad Trends.
           </p>
         </motion.div>
       </div>

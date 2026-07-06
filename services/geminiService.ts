@@ -2,7 +2,12 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 export const generateCampaignStrategy = async (industry: string, targetAudience: string, goal: string, imageBase64?: string) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+  const apiKey = process.env.GEMINI_API_KEY || '';
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not defined in the workspace secrets. Please add it via Settings > Secrets.");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
   
   const textPart = {
     text: `Act as a senior creative strategist at BrandArcher Advertising, led by Dheeraj Kumar. 
@@ -29,7 +34,7 @@ export const generateCampaignStrategy = async (industry: string, targetAudience:
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3.5-flash",
       contents: contents,
       config: {
         responseMimeType: "application/json",
@@ -52,7 +57,7 @@ export const generateCampaignStrategy = async (industry: string, targetAudience:
     const result = JSON.parse(response.text);
     return result;
   } catch (error) {
-    console.error("Error generating campaign:", error);
+    console.warn("Error generating campaign:", error);
     throw error;
   }
 };

@@ -81,7 +81,7 @@ const BriefGenerator: React.FC = () => {
             <div className="inline-flex items-center gap-2 bg-red-600/20 text-red-500 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
               <Sparkles size={14} /> AI Campaign Strategist
             </div>
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">Test our Thinking</h2>
+            <h2 className="text-4xl md:text-7xl font-display font-bold uppercase tracking-tighter mb-10">Test our Thinking</h2>
             <p className="text-zinc-400 text-lg">Input your challenge below, and our Gemini-powered engine will outline a disruptive BrandArcher 360° approach in seconds.</p>
           </div>
 
@@ -94,7 +94,7 @@ const BriefGenerator: React.FC = () => {
               )}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">Your Industry</label>
+                  <label className="text-xs uppercase font-bold tracking-wider text-zinc-500">Your Industry</label>
                   <input 
                     type="text" 
                     value={industry}
@@ -104,7 +104,7 @@ const BriefGenerator: React.FC = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">Target Audience</label>
+                  <label className="text-xs uppercase font-bold tracking-wider text-zinc-500">Target Audience</label>
                   <input 
                     type="text" 
                     value={audience}
@@ -115,7 +115,7 @@ const BriefGenerator: React.FC = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">Primary Objective</label>
+                <label className="text-xs uppercase font-bold tracking-wider text-zinc-500">Primary Objective</label>
                 <textarea 
                   value={goal}
                   onChange={(e) => setGoal(e.target.value)}
@@ -126,7 +126,7 @@ const BriefGenerator: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                <label className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 block">Inspiration Image (Optional)</label>
+                <label className="text-xs uppercase font-bold tracking-wider text-zinc-500 block">Inspiration Image (Optional)</label>
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center gap-6">
                     {!image ? (
@@ -150,7 +150,7 @@ const BriefGenerator: React.FC = () => {
                           <X size={14} />
                         </button>
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                          <span className="text-[8px] font-black uppercase text-white tracking-widest">Preview</span>
+                          <span className="text-xs font-black uppercase text-white tracking-widest">Preview</span>
                         </div>
                       </div>
                     )}
@@ -163,11 +163,11 @@ const BriefGenerator: React.FC = () => {
                     />
                     {image && (
                       <div className="flex flex-col gap-1">
-                        <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Image uploaded for AI inspiration</p>
+                        <p className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Image uploaded for AI inspiration</p>
                         <button 
                           type="button"
                           onClick={() => fileInputRef.current?.click()}
-                          className="text-[8px] text-red-500 uppercase font-black tracking-widest hover:underline text-left"
+                          className="text-xs text-red-500 uppercase font-black tracking-wider hover:underline text-left"
                         >
                           Change Image
                         </button>
@@ -175,7 +175,7 @@ const BriefGenerator: React.FC = () => {
                     )}
                   </div>
                   {imageError && (
-                    <p className="text-[10px] text-red-500 font-bold uppercase tracking-widest animate-pulse">
+                    <p className="text-xs text-red-500 font-bold uppercase tracking-wider animate-pulse">
                       {imageError}
                     </p>
                   )}
@@ -207,7 +207,7 @@ const BriefGenerator: React.FC = () => {
                 </div>
                 <button 
                   onClick={() => setStrategy(null)}
-                  className="text-[10px] font-black uppercase tracking-widest underline decoration-2 hover:text-red-600"
+                  className="text-xs font-black uppercase tracking-wider underline decoration-2 hover:text-red-600"
                 >
                   Start Over
                 </button>
@@ -239,7 +239,7 @@ const BriefGenerator: React.FC = () => {
               </div>
 
               <div className="mt-12 pt-10 border-t border-black/10 flex flex-col md:flex-row items-center justify-between gap-6">
-                <p className="text-[10px] uppercase font-bold tracking-widest opacity-60">Ready to take this further? Our team is waiting.</p>
+                <p className="text-xs uppercase font-bold tracking-wider opacity-60">Ready to take this further? Our team is waiting.</p>
                 <a href="#contact" className="bg-black text-white px-10 py-4 font-black uppercase tracking-widest text-xs hover:bg-red-600 transition-colors">
                   Contact the Agency
                 </a>

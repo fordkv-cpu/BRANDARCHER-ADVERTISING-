@@ -92,7 +92,7 @@ const CricketMedia: React.FC = () => {
                 >
                   <div className="text-red-600 mb-2">{stat.icon}</div>
                   <div className="text-2xl font-black uppercase tracking-tighter">{stat.value}</div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{stat.label}</div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-zinc-500">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -105,7 +105,7 @@ const CricketMedia: React.FC = () => {
               <span className="text-red-600 text-xs font-black tracking-[0.5em] uppercase">Sports Media</span>
             </div>
             
-            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[0.8] mb-6">
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[1.1] mb-6">
               On-Ground <br /> 
               <span className="text-zinc-200">Cricket</span> <br />
               <span className="text-red-600">OOH</span>

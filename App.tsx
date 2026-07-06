@@ -10,10 +10,14 @@ import ChatWidget from './components/ChatWidget';
 import Portfolio from './components/Portfolio';
 import CreativeGallery from './components/CreativeGallery';
 import CricketMedia from './components/CricketMedia';
+import YoutubeLive from './components/YoutubeLive';
 import WorldWatch from './components/WorldWatch';
+import MediaPlanningInfographic from './components/MediaPlanningInfographic';
 import Footer from './components/Footer';
 import { SERVICES } from './constants';
 import { Target, Zap, Globe, Camera, Quote, Award, Linkedin, UserCheck, ShieldCheck, Trophy } from 'lucide-react';
+
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 const iconMap: Record<string, React.ReactNode> = {
   target: <Target size={32} />,
@@ -24,84 +28,139 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 const App: React.FC = () => { 
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   // Reliable professional portrait for the founder
   const founderImage = "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=800";
 
   return (
-    <div className="min-h-screen bg-black relative">
+    <div className="min-h-screen bg-[#050505] relative selection:bg-red-600 selection:text-white">
+      {/* Global Designer Overlays */}
+      <div className="noise-overlay" />
+      <div className="atmosphere" />
+      
+      {/* Vertical Grid Lines - The "Architectural" Touch */}
+      <div className="fixed inset-0 pointer-events-none z-0 flex justify-between px-6 container mx-auto opacity-[0.03]">
+        <div className="w-px h-full bg-white" />
+        <div className="w-px h-full bg-white hidden md:block" />
+        <div className="w-px h-full bg-white hidden md:block" />
+        <div className="w-px h-full bg-white" />
+      </div>
+
+      {/* Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-red-600 origin-left z-[100]"
+        style={{ scaleX }}
+      />
+
       <Navbar />
       
-      <main>
+      <main className="relative z-10">
         <Hero />
         
         {/* About Section (Our DNA) - Premium Founder Spotlight */}
-        <section id="about" className="bg-white text-black py-16 md:py-24 overflow-hidden">
+        <motion.section 
+          id="about" 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1 }}
+          className="bg-white text-black py-24 md:py-32 overflow-hidden relative"
+        >
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 items-center">
               
               {/* Left Column: Visionary Narrative */}
               <div className="lg:col-span-7 order-2 lg:order-1">
-                <div className="flex items-center gap-4 mb-4">
+                <motion.div 
+                  initial={{ x: -50, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.8 }}
+                  className="flex items-center gap-4 mb-8"
+                >
                   <div className="w-12 h-[2px] bg-red-600"></div>
                   <span className="text-red-600 text-xs font-black tracking-[0.5em] uppercase">The Visionary</span>
-                </div>
+                </motion.div>
                 
-                <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[0.8] mb-6 relative">
+                <motion.h2 
+                  initial={{ y: 30, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                  className="text-5xl md:text-8xl font-display font-bold uppercase tracking-tighter leading-[0.8] mb-10 relative"
+                >
                   Dheeraj <br /> 
-                  <span className="text-zinc-200 block md:ml-20">Kumar</span>
-                  <span className="absolute -top-10 -left-10 text-[12rem] text-zinc-50 font-black -z-10 select-none opacity-50">DK</span>
-                </h2>
+                  <span className="text-zinc-200 block md:ml-24">Kumar</span>
+                  <span className="absolute -top-16 -left-16 text-[15rem] text-zinc-50 font-display font-bold -z-10 select-none opacity-50">DK</span>
+                </motion.h2>
                 
-                <div className="space-y-4 text-sm md:text-base leading-relaxed text-zinc-700 font-light max-w-2xl relative">
+                <motion.div 
+                  initial={{ y: 20, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="space-y-8 text-base md:text-xl leading-relaxed text-zinc-600 font-light max-w-3xl relative"
+                >
                   <p className="relative z-10">
-                    At BrandArcher Advertising, we don't just follow trends—we architect them. Under my leadership, we champion <span className="font-black text-black underline decoration-red-600 decoration-4 underline-offset-8">Targeted Anarchy</span>. 
+                    At BrandArcher Advertising, we don't just follow trends—we architect them. Under my leadership, we champion <span className="font-bold text-black underline decoration-red-600 decoration-[6px] underline-offset-[12px]">Targeted Anarchy</span>. 
                   </p>
-                  <p className="text-sm text-zinc-500">
+                  <p className="text-zinc-400 text-lg">
                     It is the calculated intersection of strategic surgical precision and unapologetic creative disruption. We find the bullseye in every market and hit it with impact that resonates across every channel.
                   </p>
                   
-                  <div className="pt-6 mt-6 border-t border-zinc-100">
-                    <div className="flex flex-col md:flex-row md:items-start gap-10">
+                  <div className="pt-10 mt-10 border-t border-zinc-100">
+                    <div className="flex flex-col md:flex-row md:items-start gap-12">
                       <div className="flex-1">
-                        <Quote className="text-red-600 mb-6 opacity-40" size={32} />
-                        <p className="text-lg md:text-xl font-black italic text-black leading-tight tracking-tight mb-6">
+                        <Quote className="text-red-600 mb-8 opacity-40" size={40} />
+                        <p className="text-xl md:text-2xl font-black italic text-black leading-tight tracking-tight mb-8">
                           "Precision is the foundation of disruption. My mission is to ensure your brand leaves an permanent mark."
                         </p>
                         <div className="flex items-center gap-4">
-                           <div className="w-16 h-[1px] bg-zinc-300"></div>
+                           <div className="w-20 h-[1px] bg-zinc-300"></div>
                            <div>
                              <p className="text-sm font-black uppercase tracking-widest text-black">Founder & CEO</p>
-                             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-600 mt-1">BrandArcher Advertising</p>
+                             <p className="text-xs font-bold uppercase tracking-wider text-red-600 mt-1">BrandArcher Advertising</p>
                            </div>
                         </div>
                       </div>
                       
-                      <div className="flex flex-col gap-6 bg-zinc-50 p-8 border-l-4 border-red-600">
-                         <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-zinc-500">
-                           <Award size={16} className="text-red-600" /> Executive Leadership
+                      <div className="flex flex-col gap-8 bg-zinc-50 p-10 border-l-8 border-red-600">
+                         <div className="flex items-center gap-4 text-sm font-black uppercase tracking-wider text-zinc-600">
+                           <Award size={20} className="text-red-600" /> Executive Leadership
                          </div>
-                         <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-zinc-500">
-                           <UserCheck size={16} className="text-red-600" /> Brand Strategist
+                         <div className="flex items-center gap-4 text-sm font-black uppercase tracking-wider text-zinc-600">
+                           <UserCheck size={20} className="text-red-600" /> Brand Strategist
                          </div>
-                         <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-zinc-500">
-                           <ShieldCheck size={16} className="text-red-600" /> Market Authority
+                         <div className="flex items-center gap-4 text-sm font-black uppercase tracking-wider text-zinc-600">
+                           <ShieldCheck size={20} className="text-red-600" /> Market Authority
                          </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
               
               {/* Right Column: Original Natural Portrait */}
-              <div className="lg:col-span-5 order-1 lg:order-2 relative">
+              <motion.div 
+                initial={{ scale: 0.9, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 1 }}
+                className="lg:col-span-5 order-1 lg:order-2 relative"
+              >
                 <div className="relative">
                   {/* Decorative Frame Elements */}
-                  <div className="absolute -top-10 -right-10 w-40 h-40 border-t-2 border-r-2 border-zinc-100 -z-10" />
-                  <div className="absolute -bottom-10 -left-10 w-40 h-40 border-b-2 border-l-2 border-zinc-100 -z-10" />
+                  <div className="absolute -top-12 -right-12 w-48 h-48 border-t-2 border-r-2 border-zinc-100 -z-10" />
+                  <div className="absolute -bottom-12 -left-12 w-48 h-48 border-b-2 border-l-2 border-zinc-100 -z-10" />
                   
                   {/* The Main Portrait Container */}
                   <div className="relative aspect-[4/5] overflow-hidden shadow-2xl group bg-zinc-100">
-                    {/* Natural original photo - No filters or changes applied to preserve the face exactly as requested */}
                     <img 
                       src={founderImage} 
                       alt="Dheeraj Kumar - Founder of BrandArcher" 
@@ -127,41 +186,94 @@ const App: React.FC = () => {
                   </div>
                   
                   {/* Founder Nameplate Overlay */}
-                  <div className="absolute -bottom-12 -left-12 bg-black p-6 md:p-8 text-white shadow-[40px_40px_100px_rgba(0,0,0,0.5)] border-l-[12px] border-red-600">
-                    <span className="text-red-600 text-[11px] font-black uppercase tracking-[0.6em] mb-3 block">Chief Architect</span>
-                    <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none">Dheeraj <br /> Kumar</h3>
+                  <div className="absolute -bottom-16 -left-16 bg-black p-8 md:p-10 text-white shadow-[40px_40px_100px_rgba(0,0,0,0.5)] border-l-[16px] border-red-600">
+                    <span className="text-red-600 text-xs font-black uppercase tracking-wider mb-4 block">Chief Architect</span>
+                    <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tighter leading-none">Dheeraj <br /> Kumar</h3>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Services Section */}
-        <section id="services" className="bg-black py-16 border-y border-zinc-900">
-          <div className="container mx-auto px-6 text-center mb-12">
-            <span className="text-red-600 text-xs font-black tracking-widest uppercase mb-4 block">Capabilities</span>
-            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none">360° Expertise</h2>
+        <motion.section 
+          id="services" 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="bg-black py-32 border-y border-zinc-900/50 relative overflow-hidden"
+        >
+          <div className="container mx-auto px-6 text-center mb-20">
+            <motion.span 
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-red-600 text-xs font-black tracking-[0.5em] uppercase mb-6 block"
+            >
+              Capabilities
+            </motion.span>
+            <motion.h2 
+              initial={{ y: 30, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-5xl md:text-9xl font-display font-bold uppercase tracking-tighter leading-none"
+            >
+              360° Expertise
+            </motion.h2>
           </div>
           
-          <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-900 border border-zinc-900">
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.2
+                }
+              }
+            }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-900/30 border border-zinc-900/50"
+          >
             {SERVICES.map((service) => (
-              <div key={service.id} className="bg-black p-6 hover:bg-zinc-950 transition-colors group cursor-default">
-                <div className="text-red-600 mb-10 group-hover:scale-110 transition-transform">
+              <motion.div 
+                key={service.id} 
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: {
+                      duration: 0.8,
+                      ease: [0.22, 1, 0.36, 1]
+                    }
+                  }
+                }}
+                className="bg-black p-10 hover:bg-zinc-950 transition-all duration-500 group cursor-default border border-transparent hover:border-zinc-800"
+              >
+                <div className="text-red-600 mb-12 group-hover:scale-110 transition-transform duration-500">
                   {iconMap[service.icon]}
                 </div>
-                <h3 className="text-base font-black uppercase tracking-widest mb-6">{service.title}</h3>
-                <p className="text-zinc-500 text-xs leading-relaxed">{service.description}</p>
-              </div>
+                <h3 className="text-lg font-black uppercase tracking-widest mb-8 group-hover:text-red-600 transition-colors">{service.title}</h3>
+                <p className="text-zinc-500 text-sm leading-relaxed font-light">{service.description}</p>
+              </motion.div>
             ))}
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
+
+        <MediaPlanningInfographic />
 
         <WorldWatch />
 
         <Portfolio />
         <CricketMedia />
+        <YoutubeLive />
         <CreativeGallery />
 
         <BrandMetrics />

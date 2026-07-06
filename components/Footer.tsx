@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowUpRight, Instagram, Twitter, Linkedin, Facebook, Phone, MapPin } from 'lucide-react';
+import { ArrowUpRight, Instagram, Twitter, Linkedin, Facebook, Phone, MapPin, Youtube } from 'lucide-react';
 import VisitorCounter from './VisitorCounter';
 
 const Footer: React.FC = () => {
@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
               Future
             </h2>
             <div className="flex flex-col gap-4">
-              <a href="mailto:ceo@brandarcher.in" className="text-xl md:text-2xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group break-all">
+              <a href="mailto:ceo@brandarcher.in?subject=Business Inquiry | BrandArcher" className="text-xl md:text-2xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group break-all">
                 ceo@brandarcher.in
                 <ArrowUpRight size={24} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
               </a>
@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="space-y-12">
               <div>
-                <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-6">Headquarters</h4>
+                <h4 className="text-xs uppercase font-bold tracking-wider text-zinc-500 mb-6">Headquarters</h4>
                 <ul className="space-y-6 text-sm">
                   <li>
                     <p className="font-bold uppercase tracking-widest mb-1">Banda, India</p>
@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
                       href={googleMapsUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-red-600 hover:text-white transition-colors group"
+                      className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-red-600 hover:text-white transition-colors group"
                     >
                       View on Google Maps <MapPin size={12} className="group-hover:translate-x-1 transition-transform" />
                     </a>
@@ -55,37 +55,37 @@ const Footer: React.FC = () => {
               </div>
 
               <div>
-                <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-6">Branch Offices</h4>
+                <h4 className="text-xs uppercase font-bold tracking-wider text-zinc-500 mb-6">Branch Offices</h4>
                 <div className="grid grid-cols-2 gap-y-4 text-sm">
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-red-600"></div>
-                    <span className="font-bold uppercase tracking-widest text-[11px]">Lucknow</span>
+                    <span className="font-bold uppercase tracking-wider text-xs">Lucknow</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-red-600"></div>
-                    <span className="font-bold uppercase tracking-widest text-[11px]">Noida</span>
+                    <span className="font-bold uppercase tracking-wider text-xs">Noida</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-red-600"></div>
-                    <span className="font-bold uppercase tracking-widest text-[11px]">Ludhiana</span>
+                    <span className="font-bold uppercase tracking-wider text-xs">Ludhiana</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-red-600"></div>
-                    <span className="font-bold uppercase tracking-widest text-[11px]">Vadodara</span>
+                    <span className="font-bold uppercase tracking-wider text-xs">Vadodara</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-red-600"></div>
-                    <span className="font-bold uppercase tracking-widest text-[11px]">Dehradun</span>
+                    <span className="font-bold uppercase tracking-wider text-xs">Dehradun</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-red-600"></div>
-                    <span className="font-bold uppercase tracking-widest text-[11px]">Mumbai</span>
+                    <span className="font-bold uppercase tracking-wider text-xs">Mumbai</span>
                   </div>
                 </div>
               </div>
             </div>
             <div>
-              <h4 className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 mb-8">Social Ecosystem</h4>
+              <h4 className="text-xs uppercase font-bold tracking-wider text-zinc-500 mb-8">Social Ecosystem</h4>
               <div className="grid grid-cols-2 gap-3">
                 <a 
                   href={instagramUrl} 
@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
                   className="flex items-center gap-2 p-2 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
                 >
                   <Instagram size={16} className="text-zinc-500 group-hover:text-white transition-colors" />
-                  <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-white">Instagram</span>
+                  <span className="text-xs font-black uppercase tracking-wider group-hover:text-white">Instagram</span>
                 </a>
                 <a 
                   href="https://twitter.com/brandarcher" 
@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
                   className="flex items-center gap-2 p-2 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
                 >
                   <Twitter size={16} className="text-zinc-500 group-hover:text-white transition-colors" />
-                  <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-white">Twitter</span>
+                  <span className="text-xs font-black uppercase tracking-wider group-hover:text-white">Twitter</span>
                 </a>
                 <a 
                   href={linkedinUrl} 
@@ -115,7 +115,7 @@ const Footer: React.FC = () => {
                   className="flex items-center gap-2 p-2 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
                 >
                   <Linkedin size={16} className="text-zinc-500 group-hover:text-white transition-colors" />
-                  <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-white">LinkedIn</span>
+                  <span className="text-xs font-black uppercase tracking-wider group-hover:text-white">LinkedIn</span>
                 </a>
                 <a 
                   href={facebookUrl} 
@@ -125,7 +125,17 @@ const Footer: React.FC = () => {
                   className="flex items-center gap-2 p-2 bg-zinc-900/50 border border-zinc-800 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
                 >
                   <Facebook size={16} className="text-zinc-500 group-hover:text-white transition-colors" />
-                  <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-white">Facebook</span>
+                  <span className="text-xs font-black uppercase tracking-wider group-hover:text-white">Facebook</span>
+                </a>
+                <a 
+                  href="https://youtube.com/@brandarcher?si=TNUFYCWyaJhXuq70" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Watch BrandArcher on YouTube"
+                  className="col-span-2 flex items-center justify-center gap-2.5 p-3 bg-red-600/10 border border-red-600/30 rounded-sm hover:bg-red-600 hover:border-red-600 transition-all group"
+                >
+                  <Youtube size={16} className="text-red-500 group-hover:text-white transition-colors" />
+                  <span className="text-xs font-black uppercase tracking-wider text-red-500 group-hover:text-white">Watch Official YouTube Channel</span>
                 </a>
               </div>
             </div>
@@ -134,12 +144,12 @@ const Footer: React.FC = () => {
 
         <div className="pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <p className="text-[10px] uppercase font-bold tracking-widest text-zinc-600">
+            <p className="text-xs uppercase font-bold tracking-wider text-zinc-600">
               © 2025 BRANDARCHER ADVERTISING. ALL RIGHTS RESERVED.
             </p>
             <VisitorCounter />
           </div>
-          <div className="flex gap-8 text-[10px] uppercase font-bold tracking-widest text-zinc-600">
+          <div className="flex gap-8 text-xs uppercase font-bold tracking-wider text-zinc-600">
             <a href="#" className="hover:text-white">Privacy Policy</a>
             <a href="#" className="hover:text-white">Terms of Use</a>
             <a href="#" className="hover:text-white">Cookies</a>

@@ -113,9 +113,9 @@ const GalleryItem: React.FC<{
           opacity: 1 
         } : {}}
         whileHover={{ 
-          scale: 1.25,
-          filter: 'blur(0px) brightness(1.2) contrast(1.1) saturate(1.1)',
-          transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] }
+          scale: 1.1,
+          filter: 'blur(0px) brightness(1.1) contrast(1.1) saturate(1.1)',
+          transition: { duration: 1.2, ease: [0.33, 1, 0.68, 1] }
         }}
         onLoad={() => setIsLoaded(true)}
         src={item.url} 
@@ -134,7 +134,7 @@ const GalleryItem: React.FC<{
           <motion.p 
             initial={{ y: "100%" }}
             whileInView={{ y: 0 }}
-            className="text-red-600 text-[10px] font-black uppercase tracking-[0.3em]"
+            className="text-red-600 text-xs font-black uppercase tracking-wider"
           >
             Project Detail
           </motion.p>
@@ -162,7 +162,7 @@ const GalleryItem: React.FC<{
           </button>
           <button 
             onClick={() => onOpen(currentIndex)}
-            className="flex items-center gap-3 bg-white text-black px-6 py-2.5 text-[9px] font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-colors"
+            className="flex items-center gap-3 bg-white text-black px-6 py-2.5 text-xs font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-colors"
           >
             View Render <Maximize2 size={12} />
           </button>
@@ -270,12 +270,22 @@ const CreativeGallery: React.FC = () => {
         setVideoUrl(URL.createObjectURL(blob));
       }
     } catch (error: any) {
-      console.error("Video generation failed:", error);
+      console.error("Video generation failed:", {
+        message: error.message,
+        code: error.status || error.code,
+        details: error.details || "No additional details",
+        timestamp: new Date().toISOString()
+      });
+
       if (error.message?.includes("Requested entity was not found") || error.message?.includes("API key")) {
-        setAuthError("API Key issue detected. Please ensure you have selected a valid paid project API key.");
+        setAuthError("API Key issue detected. Veo requires a paid Google Cloud project with the Generative AI API enabled. Please ensure you have selected a valid paid project API key.");
         await (window as any).aistudio.openSelectKey();
+      } else if (error.message?.includes("Quota exceeded") || error.status === 429) {
+        setAuthError("Synthesis quota exceeded. Our AI engines are currently at peak capacity. Please try again in a few minutes.");
+      } else if (error.message?.includes("offline") || !navigator.onLine) {
+        setAuthError("Network disruption detected. Please check your internet connection and try the synthesis again.");
       } else {
-        setAuthError("An unexpected error occurred. Please try again.");
+        setAuthError(`Synthesis failed: ${error.message || "An unexpected error occurred"}. Please try again or contact support if the issue persists.`);
       }
     } finally {
       setIsVideoLoading(false);
@@ -334,7 +344,7 @@ const CreativeGallery: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-6"
+            className="text-4xl md:text-7xl font-display font-bold uppercase tracking-tighter leading-none mb-10"
           >
             Spatial <br /> <span className="text-outline text-white/10">Innovations</span>
           </motion.h2>
@@ -372,13 +382,13 @@ const CreativeGallery: React.FC = () => {
             >
               <div className="absolute top-10 right-10 flex gap-4 z-[110]">
                 <button 
-                  onClick={handleGenerateVideo}
+                  onClick={() => handleGenerateVideo()}
                   disabled={isVideoLoading}
                   className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-4 py-2 rounded-full transition-colors border border-white/10 disabled:opacity-50"
                   title="Generate Promo Video"
                 >
                   {isVideoLoading ? <Loader2 size={18} className="animate-spin" /> : <Play size={18} fill="currentColor" />}
-                  <span className="text-[10px] font-black uppercase tracking-widest hidden md:block">
+                  <span className="text-xs font-black uppercase tracking-wider hidden md:block">
                     {isVideoLoading ? 'Generating...' : 'Generate Promo'}
                   </span>
                 </button>
@@ -388,7 +398,7 @@ const CreativeGallery: React.FC = () => {
                   title="Share Project"
                 >
                   {isShared ? <Check size={18} className="text-green-500" /> : <Share2 size={18} />}
-                  <span className="text-[10px] font-black uppercase tracking-widest hidden md:block">
+                  <span className="text-xs font-black uppercase tracking-wider hidden md:block">
                     {isShared ? 'Copied' : 'Share'}
                   </span>
                 </button>
@@ -445,18 +455,18 @@ const CreativeGallery: React.FC = () => {
                       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
                         <button 
                           onClick={() => (window as any).aistudio.openSelectKey()}
-                          className="bg-red-600 text-white px-10 py-4 font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all"
+                          className="bg-red-600 text-white px-10 py-4 font-black uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-all"
                         >
                           Manage API Key
                         </button>
                         <button 
                           onClick={() => setAuthError(null)}
-                          className="border border-white/10 text-white px-10 py-4 font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all"
+                          className="border border-white/10 text-white px-10 py-4 font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all"
                         >
                           Dismiss
                         </button>
                       </div>
-                      <p className="mt-8 text-[9px] text-zinc-600 uppercase tracking-[0.3em]">
+                      <p className="mt-8 text-xs text-zinc-600 uppercase tracking-wider">
                         Note: Veo requires a paid Google Cloud project API key.
                       </p>
                     </div>
@@ -472,13 +482,13 @@ const CreativeGallery: React.FC = () => {
                         <a 
                           href={videoUrl} 
                           download={`${galleryItems[selectedIdx].title}_Promo.mp4`}
-                          className="bg-red-600 text-white px-8 py-3 font-black uppercase tracking-widest text-[10px] flex items-center gap-2 hover:bg-white hover:text-black transition-all"
+                          className="bg-red-600 text-white px-8 py-3 font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:bg-white hover:text-black transition-all"
                         >
                           Download Promo <Download size={14} />
                         </a>
                         <button 
                           onClick={() => setVideoUrl(null)}
-                          className="border border-white/10 text-white px-8 py-3 font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all"
+                          className="border border-white/10 text-white px-8 py-3 font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all"
                         >
                           Back to Render
                         </button>
@@ -488,7 +498,7 @@ const CreativeGallery: React.FC = () => {
                     <div className="text-center py-20">
                       <Loader2 className="w-20 h-20 text-red-600 animate-spin mx-auto mb-8" strokeWidth={1} />
                       <h3 className="text-2xl font-black uppercase tracking-tighter text-white mb-2">Generating Promo</h3>
-                      <p className="text-red-600 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">
+                      <p className="text-red-600 font-black uppercase tracking-wider text-xs animate-pulse">
                         {loadingMessages[loadingStep]}
                       </p>
                     </div>
@@ -505,7 +515,7 @@ const CreativeGallery: React.FC = () => {
                   
                   {!isVideoLoading && !videoUrl && (
                     <div className="mt-10 text-center max-w-2xl">
-                      <p className="text-red-600 text-[10px] font-black uppercase tracking-[0.4em] mb-4">Project Spotlight</p>
+                      <p className="text-red-600 text-xs font-black uppercase tracking-wider mb-4">Project Spotlight</p>
                       <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-white mb-6">
                         {galleryItems[selectedIdx].title}
                       </h3>
@@ -532,11 +542,11 @@ const CreativeGallery: React.FC = () => {
             </p>
           </div>
           <div className="flex flex-col items-center md:items-end gap-2">
-            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Client / Partner</span>
+            <span className="text-xs font-black uppercase tracking-wider text-zinc-600">Client / Partner</span>
             <div className="text-4xl font-black tracking-tighter text-white uppercase italic">
               SUNSTAR <span className="text-red-600">GROUPS</span>
             </div>
-            <button className="mt-4 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.4em] text-red-600 hover:text-white transition-colors group">
+            <button className="mt-4 flex items-center gap-2 text-xs font-black uppercase tracking-wider text-red-600 hover:text-white transition-colors group">
               View Blueprint <ExternalLink size={12} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </button>
           </div>

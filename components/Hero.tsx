@@ -112,12 +112,22 @@ const Hero: React.FC = () => {
         setVideoUrl(URL.createObjectURL(blob));
       }
     } catch (error: any) {
-      console.error("Video generation failed:", error);
+      console.error("Video generation failed:", {
+        message: error.message,
+        code: error.status || error.code,
+        details: error.details || "No additional details",
+        timestamp: new Date().toISOString()
+      });
+
       if (error.message?.includes("Requested entity was not found") || error.message?.includes("API key")) {
-        setAuthError("API Key issue detected. Please ensure you have selected a valid paid project API key.");
+        setAuthError("API Key issue detected. Veo requires a paid Google Cloud project with the Generative AI API enabled. Please ensure you have selected a valid paid project API key.");
         await (window as any).aistudio.openSelectKey();
+      } else if (error.message?.includes("Quota exceeded") || error.status === 429) {
+        setAuthError("Synthesis quota exceeded. Our AI engines are currently at peak capacity. Please try again in a few minutes.");
+      } else if (error.message?.includes("offline") || !navigator.onLine) {
+        setAuthError("Network disruption detected. Please check your internet connection and try the synthesis again.");
       } else {
-        setAuthError("An unexpected error occurred. Please try again.");
+        setAuthError(`Synthesis failed: ${error.message || "An unexpected error occurred"}. Please try again or contact support if the issue persists.`);
       }
     } finally {
       setIsVideoLoading(false);
@@ -144,18 +154,43 @@ const Hero: React.FC = () => {
   const particle1Y = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const particle2Y = useTransform(scrollYProgress, [0, 1], [0, -300]);
 
-  const itemVariants = {
-    hidden: { y: 80, opacity: 0 },
-    visible: (i: number) => ({
+  const titleVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.4,
+      },
+    },
+  };
+
+  const letterVariants = {
+    hidden: { y: 100, opacity: 0 },
+    visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 1.5,
-        delay: 0.6 + (0.2 * i),
+        duration: 1.2,
         ease: [0.16, 1, 0.3, 1],
       },
-    }),
+    },
   };
+
+  const SplitText = ({ text, className, custom }: { text: string, className: string, custom?: number }) => (
+    <motion.span 
+      variants={titleVariants}
+      initial="hidden"
+      animate="visible"
+      className={className}
+    >
+      {text.split('').map((char, i) => (
+        <motion.span key={i} variants={letterVariants} className="inline-block">
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
 
   return (
     <section 
@@ -194,11 +229,11 @@ const Hero: React.FC = () => {
       >
         <motion.div
           initial={{ opacity: 0, letterSpacing: "0.2em" }}
-          animate={{ opacity: 1, letterSpacing: "0.6em" }}
+          animate={{ opacity: 1, letterSpacing: "0.4em" }}
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="inline-block mb-6"
         >
-          <span className="text-[10px] md:text-[11px] font-black uppercase text-red-600 border-x border-red-600 px-4 py-1">
+          <span className="text-xs md:text-sm font-black uppercase text-red-600 border-x border-red-600 px-4 py-1">
             BrandArcher Advertising
           </span>
         </motion.div>
@@ -207,40 +242,25 @@ const Hero: React.FC = () => {
           style={{ x: textX, y: textY }}
           className="flex flex-col items-center select-none"
         >
-          <div className="overflow-hidden mb-1">
-            <motion.span 
-              custom={0}
-              initial="hidden"
-              animate="visible"
-              variants={itemVariants}
-              className="block text-[10vw] md:text-[6vw] font-black leading-[0.9] tracking-tighter uppercase text-white"
-            >
-              Precision
-            </motion.span>
+          <div className="overflow-hidden mb-2">
+            <SplitText 
+              text="Precision" 
+              className="block text-[12vw] md:text-[8vw] font-display font-bold leading-[0.8] tracking-tighter uppercase text-white" 
+            />
           </div>
           
-          <div className="overflow-hidden mb-1">
-            <motion.span 
-              custom={1}
-              initial="hidden"
-              animate="visible"
-              variants={itemVariants}
-              className="block text-[10vw] md:text-[6vw] font-black leading-[0.9] tracking-tighter uppercase text-outline opacity-40"
-            >
-              Meets
-            </motion.span>
+          <div className="overflow-hidden mb-2">
+            <SplitText 
+              text="Meets" 
+              className="block text-[12vw] md:text-[8vw] font-display font-bold leading-[0.8] tracking-tighter uppercase text-outline opacity-20" 
+            />
           </div>
 
           <div className="overflow-hidden">
-            <motion.span 
-              custom={2}
-              initial="hidden"
-              animate="visible"
-              variants={itemVariants}
-              className="block text-[10vw] md:text-[6vw] font-black leading-[0.9] tracking-tighter uppercase text-red-600 drop-shadow-[0_0_30px_rgba(220,38,38,0.3)]"
-            >
-              Disruption
-            </motion.span>
+            <SplitText 
+              text="Disruption" 
+              className="block text-[12vw] md:text-[8vw] font-display font-bold leading-[0.8] tracking-tighter uppercase text-red-600 drop-shadow-[0_0_50px_rgba(220,38,38,0.4)]" 
+            />
           </div>
         </motion.div>
         
@@ -248,27 +268,27 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl mx-auto mt-8"
+          className="max-w-4xl mx-auto mt-12"
         >
-          <h2 className="text-base md:text-xl font-light text-zinc-400 mb-6 uppercase tracking-[0.3em] leading-relaxed">
-            Leading <span className="text-white font-black italic">360° ADVERTISING COMPANY</span>
+          <h2 className="text-sm md:text-lg font-light text-zinc-400 mb-10 uppercase tracking-[0.5em] leading-relaxed">
+            Leading <span className="text-white font-bold italic">360° ADVERTISING COMPANY</span>
           </h2>
           
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <motion.button 
-              whileHover={{ scale: 1.05, backgroundColor: "#dc2626", color: "#fff" }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-white text-black px-10 py-3 font-black uppercase tracking-widest text-[10px] transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+              whileHover={{ scale: 1.02, backgroundColor: "#dc2626", color: "#fff" }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-white text-black px-12 py-4 font-bold uppercase tracking-wider text-xs transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
             >
               Explore Portfolio
             </motion.button>
             <motion.button 
-              whileHover={{ scale: 1.05, border: "1px solid #fff" }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02, border: "1px solid #fff" }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setShowConfig(true)}
               disabled={isVideoLoading}
-              className="border border-white/10 text-white px-10 py-3 font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all duration-300 backdrop-blur-md flex items-center gap-3 disabled:opacity-50"
+              className="border border-white/10 text-white px-12 py-4 font-bold uppercase tracking-wider text-xs hover:bg-white/5 transition-all duration-500 backdrop-blur-md flex items-center gap-3 disabled:opacity-50"
             >
               {isVideoLoading ? (
                 <Loader2 className="animate-spin" size={16} />
@@ -280,12 +300,12 @@ const Hero: React.FC = () => {
             <motion.a 
               href="/company-profile.pdf"
               download
-              whileHover={{ scale: 1.05, backgroundColor: "#fff", color: "#000" }}
-              whileTap={{ scale: 0.95 }}
-              className="border border-red-600/30 text-red-600 px-10 py-3 font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-md flex items-center gap-3"
+              whileHover={{ scale: 1.02, backgroundColor: "#fff", color: "#000" }}
+              whileTap={{ scale: 0.98 }}
+              className="border border-red-600/30 text-red-600 px-12 py-4 font-bold uppercase tracking-wider text-xs hover:bg-white hover:text-black transition-all duration-500 backdrop-blur-md flex items-center gap-3"
             >
               <Download size={16} />
-              Download Profile
+              Profile
             </motion.a>
           </div>
         </motion.div>
@@ -313,13 +333,13 @@ const Hero: React.FC = () => {
               </button>
 
               <div className="mb-10">
-                <span className="text-red-600 text-[10px] font-black uppercase tracking-[0.4em] mb-2 block">AI Synthesis</span>
+                <span className="text-red-600 text-xs font-black uppercase tracking-wider mb-2 block">AI Synthesis</span>
                 <h3 className="text-3xl font-black uppercase tracking-tighter text-white">Configure Promo</h3>
               </div>
 
               <div className="space-y-8">
                 <div>
-                  <label className="block text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-4">Key Message / Custom Text</label>
+                  <label className="block text-zinc-500 text-xs font-black uppercase tracking-widest mb-4">Key Message / Custom Text</label>
                   <input 
                     type="text" 
                     value={customMessage}
@@ -330,7 +350,7 @@ const Hero: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-4">Brand Accent Color</label>
+                  <label className="block text-zinc-500 text-xs font-black uppercase tracking-widest mb-4">Brand Accent Color</label>
                   <div className="flex gap-4">
                     {brandColors.map((color) => (
                       <button
@@ -382,18 +402,18 @@ const Hero: React.FC = () => {
                   <div className="flex flex-col md:flex-row items-center justify-center gap-4">
                     <button 
                       onClick={() => (window as any).aistudio.openSelectKey()}
-                      className="bg-red-600 text-white px-10 py-4 font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all"
+                      className="bg-red-600 text-white px-10 py-4 font-black uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-all"
                     >
                       Manage API Key
                     </button>
                     <button 
                       onClick={() => setAuthError(null)}
-                      className="border border-white/10 text-white px-10 py-4 font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all"
+                      className="border border-white/10 text-white px-10 py-4 font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all"
                     >
                       Dismiss
                     </button>
                   </div>
-                  <p className="mt-8 text-[9px] text-zinc-600 uppercase tracking-[0.3em]">
+                  <p className="mt-8 text-xs text-zinc-600 uppercase tracking-wider">
                     Note: Veo requires a paid Google Cloud project API key.
                   </p>
                 </div>
@@ -421,7 +441,7 @@ const Hero: React.FC = () => {
                 >
                   <button 
                     onClick={() => setVideoUrl(null)}
-                    className="absolute -top-16 right-0 text-white hover:text-red-600 transition-colors flex items-center gap-2 uppercase font-black text-[10px] tracking-[0.3em]"
+                    className="absolute -top-16 right-0 text-white hover:text-red-600 transition-colors flex items-center gap-2 uppercase font-black text-xs tracking-wider"
                   >
                     Close <X size={20} />
                   </button>
@@ -444,13 +464,13 @@ const Hero: React.FC = () => {
                       <a 
                         href={videoUrl!} 
                         download="BrandArcher_Promo.mp4"
-                        className="bg-red-600 text-white px-8 py-4 font-black uppercase tracking-widest text-[10px] flex items-center gap-2 hover:bg-white hover:text-black transition-all"
+                        className="bg-red-600 text-white px-8 py-4 font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:bg-white hover:text-black transition-all"
                       >
                         Download <Download size={14} />
                       </a>
                       <button 
                         onClick={() => setVideoUrl(null)}
-                        className="border border-white/10 text-white px-8 py-4 font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all"
+                        className="border border-white/10 text-white px-8 py-4 font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all"
                       >
                         Dismiss
                       </button>

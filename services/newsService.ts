@@ -3,18 +3,25 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { NewsItem } from "../types";
 
 export const fetchIndustryNews = async (): Promise<NewsItem[]> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+  const apiKey = process.env.GEMINI_API_KEY || '';
+  if (!apiKey) {
+    console.warn("GEMINI_API_KEY is not defined. Using offline fallback news feed.");
+    return getFallbackNews();
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
   
-  const prompt = `Search for the latest 10 news headlines from the last 48 hours about:
-  1. Major Indian advertising campaigns and agency wins (Campaign India, Exchange4media, Afaqs).
-  2. Government of India (GoI) advertising announcements, PIB releases, and DAVP updates.
-  3. Global advertising exhibitions and marketing trade shows (Cannes Lions, SXSW, etc.).
+  const prompt = `Search for the latest 10 news headlines from the last 72 hours about:
+  1. Major Indian advertising industry news (Campaign India, Exchange4media, Afaqs, Social Samosa).
+  2. Government of India (GoI) advertising updates from CBC (Central Bureau of Communication), DAVP, and Ministry of Information and Broadcasting (MIB).
+  3. Indian Newspaper Society (INS) guidelines and advertising policy updates.
+  4. Global advertising trends and major international agency news.
   
   Return a JSON array of objects with: title, source, url, summary (1 sentence), and category ("Global", "Indian", or "Govt").`;
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3.5-flash",
       contents: prompt,
       config: {
         tools: [{ googleSearch: {} }],
@@ -42,7 +49,7 @@ export const fetchIndustryNews = async (): Promise<NewsItem[]> => {
     const parsed = JSON.parse(text);
     return Array.isArray(parsed) && parsed.length > 0 ? parsed : getFallbackNews();
   } catch (error) {
-    console.error("Error fetching exhibition news:", error);
+    console.warn("Could not fetch latest live news via Gemini (using built-in cache):", error);
     return getFallbackNews();
   }
 };

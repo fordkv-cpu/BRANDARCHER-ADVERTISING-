@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Cpu, Activity, Shield, Zap, ChevronRight, ChevronLeft, Wifi, Terminal, Sun, Moon, Sunrise, Sunset } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Country {
   name: string;
@@ -41,7 +41,6 @@ const timeOfDayConfig: Record<TimeOfDay, { color: string, glow: string, label: s
 const WorldWatch: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);
   const [time, setTime] = useState(new Date());
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -52,7 +51,22 @@ const WorldWatch: React.FC = () => {
 
   const getLocalTime = (date: Date, timezone: string) => {
     try {
-      return new Date(date.toLocaleString('en-US', { timeZone: timezone }));
+      // Using a more reliable way to get time in a specific timezone
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: timezone,
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: false
+      });
+      const parts = formatter.formatToParts(date);
+      const hour = parseInt(parts.find(p => p.type === 'hour')?.value || '0');
+      const minute = parseInt(parts.find(p => p.type === 'minute')?.value || '0');
+      const second = parseInt(parts.find(p => p.type === 'second')?.value || '0');
+      
+      const d = new Date(date);
+      d.setHours(hour, minute, second);
+      return d;
     } catch (e) {
       return date;
     }
@@ -76,10 +90,10 @@ const WorldWatch: React.FC = () => {
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-red-600 animate-pulse" />
-              <span className="text-red-600 text-[8px] font-black uppercase tracking-[0.4em]">System_Archer_v4.0</span>
+              <span className="text-red-600 text-xs font-black uppercase tracking-wider">System_Archer_v4.0</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none italic">
-              Global <span className="text-zinc-800">HUD</span>
+            <h2 className="text-4xl md:text-6xl font-display font-bold uppercase tracking-tighter leading-none italic">
+              Global <span className="text-zinc-900">HUD</span>
             </h2>
           </div>
           
@@ -87,15 +101,15 @@ const WorldWatch: React.FC = () => {
             <div className="px-3 py-1 bg-zinc-900/50 border border-zinc-800 rounded-sm flex items-center gap-2">
               <Activity size={12} className="text-cyan-400" />
               <div className="flex flex-col">
-                <span className="text-[7px] text-zinc-500 uppercase">Latency</span>
-                <span className="text-[10px] font-bold text-cyan-400">0.003ms</span>
+                <span className="text-[10px] text-zinc-500 uppercase">Latency</span>
+                <span className="text-xs font-bold text-cyan-400">0.003ms</span>
               </div>
             </div>
             <div className="px-3 py-1 bg-zinc-900/50 border border-zinc-800 rounded-sm flex items-center gap-2">
               <Shield size={12} className="text-green-500" />
               <div className="flex flex-col">
-                <span className="text-[7px] text-zinc-500 uppercase">Security</span>
-                <span className="text-[10px] font-bold text-green-500">Encrypted</span>
+                <span className="text-[10px] text-zinc-500 uppercase">Security</span>
+                <span className="text-xs font-bold text-green-500">Encrypted</span>
               </div>
             </div>
           </div>
@@ -114,9 +128,9 @@ const WorldWatch: React.FC = () => {
 
               {/* Scanning Line Animation */}
               <motion.div 
-                className="absolute left-0 w-full h-[2px] bg-red-600/20 z-10 pointer-events-none"
-                animate={{ top: ['0%', '100%'] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                className="absolute left-0 w-full h-[2px] bg-red-600/30 z-10 pointer-events-none"
+                animate={{ top: ['0%', '100%', '0%'] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
               />
 
               <div className="flex flex-col md:flex-row justify-between items-start gap-12">
@@ -127,7 +141,7 @@ const WorldWatch: React.FC = () => {
                       {selectedCountry.flag}
                     </div>
                     <div>
-                      <p className="text-[8px] text-zinc-500 uppercase tracking-widest">Selected_Node</p>
+                      <p className="text-xs text-zinc-500 uppercase tracking-wider">Selected_Node</p>
                       <h3 className="text-xl font-black uppercase tracking-tighter text-white">{selectedCountry.name}</h3>
                     </div>
                   </div>
@@ -140,7 +154,7 @@ const WorldWatch: React.FC = () => {
                       className="text-6xl md:text-8xl font-black tracking-tighter leading-none select-none"
                       style={{ color: config.color, textShadow: `0 0 20px ${config.color}44` }}
                     >
-                      {localTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                      {localTime.getHours().toString().padStart(2, '0')}:{localTime.getMinutes().toString().padStart(2, '0')}
                       <span className="text-xl md:text-2xl ml-2 opacity-50">
                         {localTime.getSeconds().toString().padStart(2, '0')}
                       </span>
@@ -151,8 +165,8 @@ const WorldWatch: React.FC = () => {
                     <div className="flex items-center gap-2 px-3 py-1 bg-zinc-900/30 border border-zinc-800 rounded-sm">
                       <div className={`w-2 h-2 rounded-full ${config.glow} animate-pulse`} style={{ backgroundColor: config.color }} />
                       <div className="flex flex-col">
-                        <span className="text-[7px] text-zinc-500 uppercase tracking-widest">Time_Phase</span>
-                        <span className="text-[10px] font-black tracking-widest flex items-center gap-1" style={{ color: config.color }}>
+                        <span className="text-[10px] text-zinc-500 uppercase tracking-wider">Time_Phase</span>
+                        <span className="text-xs font-black tracking-wider flex items-center gap-1" style={{ color: config.color }}>
                           {config.icon}
                           {config.label}
                         </span>
@@ -160,7 +174,7 @@ const WorldWatch: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-3">
                       <Terminal size={14} className="text-zinc-600" />
-                      <span className="text-[10px] text-zinc-600 uppercase tracking-widest">Sync_Status: Active</span>
+                      <span className="text-xs text-zinc-600 uppercase tracking-wider">Sync_Status: Active</span>
                     </div>
                   </div>
                 </div>
@@ -168,7 +182,7 @@ const WorldWatch: React.FC = () => {
                 {/* Technical Data Sidebar */}
                 <div className="w-full md:w-40 space-y-4">
                   <div className="space-y-1">
-                    <p className="text-[8px] text-zinc-500 uppercase tracking-widest">Data_Stream</p>
+                    <p className="text-xs text-zinc-500 uppercase tracking-wider">Data_Stream</p>
                     <div className="h-16 w-full bg-zinc-900/50 border border-zinc-800 p-1 overflow-hidden">
                       <div className="flex flex-col gap-0.5">
                         {[...Array(6)].map((_, i) => (
@@ -184,7 +198,7 @@ const WorldWatch: React.FC = () => {
                   </div>
 
                   <div className="space-y-1">
-                    <p className="text-[8px] text-zinc-500 uppercase tracking-widest">Flag_Signature</p>
+                    <p className="text-xs text-zinc-500 uppercase tracking-wider">Flag_Signature</p>
                     <div className="flex h-8 border border-zinc-800">
                       {selectedCountry.colors.map((c, i) => (
                         <div key={i} className="flex-1 h-full" style={{ backgroundColor: c }} />
@@ -193,8 +207,8 @@ const WorldWatch: React.FC = () => {
                   </div>
 
                   <div className="p-3 bg-red-600/5 border border-red-600/20 rounded-sm">
-                    <p className="text-[8px] text-red-600 uppercase font-black mb-1 tracking-widest">Warning</p>
-                    <p className="text-[9px] text-zinc-500 leading-tight">Creative output exceeding safety thresholds.</p>
+                    <p className="text-xs text-red-600 uppercase font-black mb-1 tracking-wider">Warning</p>
+                    <p className="text-xs text-zinc-500 leading-tight">Creative output exceeding safety thresholds.</p>
                   </div>
                 </div>
               </div>
@@ -204,7 +218,7 @@ const WorldWatch: React.FC = () => {
           {/* Node Selection Sidebar */}
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center justify-between px-2">
-              <span className="text-[10px] text-zinc-500 uppercase tracking-widest">Available_Nodes</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-wider">Available_Nodes</span>
               <div className="flex gap-2">
                 <div className="w-1 h-1 bg-cyan-400" />
                 <div className="w-1 h-1 bg-cyan-400" />
@@ -230,9 +244,9 @@ const WorldWatch: React.FC = () => {
                     <div className="flex items-center gap-3">
                       <span className={`text-lg transition-all ${isActive ? 'scale-110 grayscale-0' : 'grayscale opacity-50'}`}>{country.flag}</span>
                       <div className="text-left">
-                        <p className={`text-[8px] font-black uppercase tracking-widest ${isActive ? 'text-red-600' : 'text-zinc-500'}`}>{country.name}</p>
+                        <p className={`text-xs font-black uppercase tracking-wider ${isActive ? 'text-red-600' : 'text-zinc-500'}`}>{country.name}</p>
                         <p className={`text-lg font-black tracking-tighter ${isActive ? 'text-white' : 'text-zinc-700'}`}>
-                          {cTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
+                          {cTime.getHours().toString().padStart(2, '0')}:{cTime.getMinutes().toString().padStart(2, '0')}
                         </p>
                       </div>
                     </div>

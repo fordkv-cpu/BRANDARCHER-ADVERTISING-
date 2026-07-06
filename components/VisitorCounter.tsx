@@ -51,7 +51,7 @@ const handleFirestoreError = (error: unknown, operationType: OperationType, path
     path
   }
   console.error('Firestore Error: ', JSON.stringify(errInfo));
-  // We don't throw here to avoid crashing the whole UI, but we log it for the system to see
+  throw new Error(JSON.stringify(errInfo));
 };
 
 const VisitorCounter: React.FC = () => {
@@ -117,8 +117,8 @@ const VisitorCounter: React.FC = () => {
         <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full border-2 border-black animate-pulse" />
       </div>
       <div className="flex flex-col">
-        <span className="text-[12px] font-black text-white leading-none">{count.toLocaleString()}</span>
-        <span className="text-[7px] font-bold uppercase tracking-widest text-zinc-500">Live Visitors</span>
+        <span className="text-sm font-black text-white leading-none">{count.toLocaleString()}</span>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Live Visitors</span>
       </div>
     </div>
   );

@@ -151,12 +151,12 @@ const ChatWidget: React.FC = () => {
                     {msg.sender === 'bot' && msg.id !== '1' && (
                        <button 
                         onClick={() => openWhatsApp(`Re: ${msg.text}`)}
-                        className="mt-2 flex items-center gap-2 text-[9px] font-black uppercase text-green-500 hover:text-green-400 transition-colors"
+                        className="mt-2 flex items-center gap-2 text-[10px] font-black uppercase text-green-500 hover:text-green-400 transition-colors"
                        >
                          Discuss on WhatsApp <ExternalLink size={9} />
                        </button>
                     )}
-                    <div className={`text-[8px] mt-1 opacity-50 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                    <div className={`text-[10px] mt-1 opacity-50 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
                       {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>
@@ -196,11 +196,11 @@ const ChatWidget: React.FC = () => {
               <div className="mt-2 flex flex-col items-center gap-1.5">
                 <button 
                   onClick={() => openWhatsApp(inputValue)}
-                  className="w-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 py-1.5 text-[9px] font-black uppercase tracking-widest text-zinc-300 hover:text-green-500 transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 py-1.5 text-[10px] font-black uppercase tracking-wider text-zinc-300 hover:text-green-500 transition-all flex items-center justify-center gap-2"
                 >
                   <Phone size={10} className="text-green-500" /> Send via WhatsApp
                 </button>
-                <p className="text-[7px] font-bold uppercase tracking-widest text-zinc-600">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-600">
                   Direct Line to Dheeraj Kumar: +91-9871700508
                 </p>
               </div>
@@ -219,11 +219,11 @@ const ChatWidget: React.FC = () => {
           {isOpen ? <X size={18} /> : <MessageCircle size={18} />}
         </span>
         <div className="relative z-10 flex flex-col items-start leading-none">
-          <span className="text-[9px] font-black uppercase tracking-[0.2em]">
+          <span className="text-[10px] font-black uppercase tracking-wider">
             {isOpen ? 'Close' : 'WhatsApp Chat'}
           </span>
           {!isOpen && (
-            <span className="text-[7px] font-bold uppercase tracking-widest opacity-70 mt-0.5">
+            <span className="text-[10px] font-bold uppercase tracking-wider opacity-70 mt-0.5">
               Strategist Online
             </span>
           )}

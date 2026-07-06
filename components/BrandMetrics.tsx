@@ -33,7 +33,7 @@ const BrandMetrics: React.FC = () => {
               viewport={{ once: true }}
             >
               <span className="text-red-600 text-xs font-black tracking-widest uppercase mb-4 block">Performance Ledger</span>
-              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none mb-6">
+              <h2 className="text-4xl md:text-7xl font-display font-bold uppercase tracking-tighter leading-none mb-10">
                 Digital <br /> <span className="text-outline">Footprint</span>
               </h2>
               <p className="text-zinc-500 text-sm leading-relaxed max-w-sm">
@@ -54,7 +54,7 @@ const BrandMetrics: React.FC = () => {
                   <Users size={24} />
                 </div>
                 <div className="flex flex-col items-end">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Growth</span>
+                  <span className="text-xs font-black uppercase tracking-wider text-zinc-600">Growth</span>
                   <span className="text-xs font-bold text-green-500">+24.8%</span>
                 </div>
               </div>
@@ -62,7 +62,7 @@ const BrandMetrics: React.FC = () => {
                 <h4 className="text-5xl font-black tracking-tighter text-white mb-2 group-hover:text-red-600 transition-colors duration-300">
                   <Counter value={842903} />
                 </h4>
-                <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Total Global Visitors</p>
+                <p className="text-zinc-500 text-xs font-black uppercase tracking-wider">Total Global Visitors</p>
               </div>
             </motion.div>
 
@@ -77,7 +77,7 @@ const BrandMetrics: React.FC = () => {
                   <Award size={24} />
                 </div>
                 <div className="flex flex-col items-end">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600">DA Score</span>
+                  <span className="text-xs font-black uppercase tracking-wider text-zinc-600">DA Score</span>
                   <span className="text-xs font-bold text-white">82 / 100</span>
                 </div>
               </div>
@@ -85,7 +85,7 @@ const BrandMetrics: React.FC = () => {
                 <h4 className="text-5xl font-black tracking-tighter text-white mb-2 group-hover:text-red-600 transition-colors duration-300">
                   98.2<span className="text-2xl text-red-600">%</span>
                 </h4>
-                <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Search Visibility Index</p>
+                <p className="text-zinc-500 text-xs font-black uppercase tracking-wider">Search Visibility Index</p>
               </div>
             </motion.div>
 
@@ -100,7 +100,7 @@ const BrandMetrics: React.FC = () => {
                   <Globe size={24} />
                 </div>
                 <div className="flex flex-col items-end">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Region</span>
+                  <span className="text-xs font-black uppercase tracking-wider text-zinc-600">Region</span>
                   <span className="text-xs font-bold text-white">India-Centric</span>
                 </div>
               </div>
@@ -108,7 +108,7 @@ const BrandMetrics: React.FC = () => {
                 <h4 className="text-5xl font-black tracking-tighter text-white mb-2 group-hover:text-red-600 transition-colors duration-300">
                   <Counter value={512} suffix="k" />
                 </h4>
-                <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Domestic Indian Reach</p>
+                <p className="text-zinc-500 text-xs font-black uppercase tracking-wider">Domestic Indian Reach</p>
               </div>
             </motion.div>
 
@@ -123,7 +123,7 @@ const BrandMetrics: React.FC = () => {
                   <TrendingUp size={24} />
                 </div>
                 <div className="flex flex-col items-end">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Conversion</span>
+                  <span className="text-xs font-black uppercase tracking-wider text-zinc-600">Conversion</span>
                   <span className="text-xs font-bold text-green-500">12.4%</span>
                 </div>
               </div>
@@ -131,7 +131,7 @@ const BrandMetrics: React.FC = () => {
                 <h4 className="text-5xl font-black tracking-tighter text-white mb-2 group-hover:text-red-600 transition-colors duration-300">
                   <Counter value={92} suffix="%" />
                 </h4>
-                <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Organic Traffic Retention</p>
+                <p className="text-zinc-500 text-xs font-black uppercase tracking-wider">Organic Traffic Retention</p>
               </div>
             </motion.div>
           </div>
@@ -151,7 +151,7 @@ const BrandMetrics: React.FC = () => {
                 <Search size={32} />
               </div>
               <div>
-                <h3 className="text-xs font-black uppercase tracking-[0.3em] text-red-600 mb-1">Global Google Ranking</h3>
+                <h3 className="text-xs font-black uppercase tracking-wider text-red-600 mb-1">Global Google Ranking</h3>
                 <p className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white">Top 0.1% Worldwide</p>
               </div>
             </div>
@@ -163,7 +163,7 @@ const BrandMetrics: React.FC = () => {
                 href={googleMapsUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.4em] text-white hover:text-red-600 transition-colors group"
+                className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-white hover:text-red-600 transition-colors group"
               >
                 Verify on Google Business <ExternalLink size={14} className="group-hover:translate-x-1 transition-transform" />
               </a>
@@ -183,7 +183,7 @@ const BrandMetrics: React.FC = () => {
         >
           {[...Array(20)].map((_, i) => (
             <div key={i} className="flex items-center gap-4">
-              <span className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-800">New visitor from <span className="text-zinc-400">{['Mumbai', 'London', 'Dubai', 'New Delhi', 'New York', 'Sydney'][i % 6]}</span></span>
+              <span className="text-xs font-black uppercase tracking-wider text-zinc-700">New visitor from <span className="text-zinc-400">{['Mumbai', 'London', 'Dubai', 'New Delhi', 'New York', 'Sydney'][i % 6]}</span></span>
               <div className="w-1 h-1 bg-red-600 rounded-full" />
             </div>
           ))}
