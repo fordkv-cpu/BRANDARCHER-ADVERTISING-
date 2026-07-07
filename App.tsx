@@ -170,7 +170,7 @@ const App: React.FC = () => {
                       referrerPolicy="no-referrer"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=1200";
+                        target.src = "https://images/Dheeraj.jpg";
                       }}
                     />
                     
