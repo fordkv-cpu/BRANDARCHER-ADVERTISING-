@@ -36,7 +36,7 @@ const App: React.FC = () => {
   });
 
   // Reliable professional portrait for the founder
-  const founderImage = "Dheeraj.jpg";
+  const founderImage = "/Dheeraj.jpg";
 
   return (
     <div className="min-h-screen bg-[#050505] relative selection:bg-red-600 selection:text-white">
