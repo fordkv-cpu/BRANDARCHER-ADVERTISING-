@@ -226,7 +226,7 @@ const WorldWatch: React.FC = () => {
               </div>
             </div>
 
-            <div className="space-y-1 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
               {countries.map((country) => {
                 const cTime = getLocalTime(time, country.timezone);
                 const isActive = selectedCountry.name === country.name;
@@ -244,8 +244,8 @@ const WorldWatch: React.FC = () => {
                     <div className="flex items-center gap-3">
                       <span className={`text-lg transition-all ${isActive ? 'scale-110 grayscale-0' : 'grayscale opacity-50'}`}>{country.flag}</span>
                       <div className="text-left">
-                        <p className={`text-xs font-black uppercase tracking-wider ${isActive ? 'text-red-600' : 'text-zinc-500'}`}>{country.name}</p>
-                        <p className={`text-lg font-black tracking-tighter ${isActive ? 'text-white' : 'text-zinc-700'}`}>
+                        <p className={`text-[10px] font-black uppercase tracking-wider ${isActive ? 'text-red-600' : 'text-zinc-500'}`}>{country.name}</p>
+                        <p className={`text-sm md:text-base font-black tracking-tighter ${isActive ? 'text-white' : 'text-zinc-400'}`}>
                           {cTime.getHours().toString().padStart(2, '0')}:{cTime.getMinutes().toString().padStart(2, '0')}
                         </p>
                       </div>
@@ -254,7 +254,7 @@ const WorldWatch: React.FC = () => {
                     {isActive && (
                       <motion.div 
                         layoutId="node-active"
-                        className="w-1 h-8 bg-red-600"
+                        className="absolute right-0 top-0 bottom-0 w-[3px] bg-red-600"
                       />
                     )}
                   </button>

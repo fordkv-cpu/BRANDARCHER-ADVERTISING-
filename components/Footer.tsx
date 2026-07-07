@@ -24,10 +24,16 @@ const Footer: React.FC = () => {
                 ceo@brandarcher.in
                 <ArrowUpRight size={24} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
               </a>
-              <a href="tel:+911204331507" className="text-xl md:text-2xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group">
-                +91-120-4331507
-                <Phone size={24} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
-              </a>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+                <a href="tel:+919871700508" className="text-xl md:text-2xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group">
+                  +91-9871700508
+                  <Phone size={24} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
+                </a>
+                <a href="tel:+911204331507" className="text-xl md:text-2xl font-light hover:text-red-600 transition-colors flex items-center gap-4 group">
+                  0120-4331507
+                  <Phone size={24} className="text-zinc-700 group-hover:text-red-600 transition-colors flex-shrink-0" />
+                </a>
+              </div>
             </div>
           </div>
 

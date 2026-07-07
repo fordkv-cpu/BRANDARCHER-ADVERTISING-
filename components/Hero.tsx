@@ -238,6 +238,7 @@ const Hero: React.FC = () => {
           </span>
         </motion.div>
 
+        <h1 className="sr-only">BrandArcher | Leading 360 Advertising Agency India & OOH Media Planning</h1>
         <motion.div 
           style={{ x: textX, y: textY }}
           className="flex flex-col items-center select-none"
@@ -270,8 +271,8 @@ const Hero: React.FC = () => {
           transition={{ delay: 1.4, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto mt-12"
         >
-          <h2 className="text-sm md:text-lg font-light text-zinc-400 mb-10 uppercase tracking-[0.5em] leading-relaxed">
-            Leading <span className="text-white font-bold italic">360° ADVERTISING COMPANY</span>
+          <h2 className="text-xs md:text-sm font-light text-zinc-400 mb-10 uppercase tracking-[0.2em] md:tracking-[0.3em] leading-relaxed max-w-3xl mx-auto">
+            The Definitive <span className="text-white font-bold italic">360 Advertising Agency India</span> — Scaling Brands with Precision <span className="text-red-600 font-bold italic">OOH Media Planning</span>
           </h2>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
