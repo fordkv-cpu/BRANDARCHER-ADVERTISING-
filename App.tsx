@@ -36,7 +36,7 @@ const App: React.FC = () => {
   });
 
   // Reliable professional portrait for the founder
-  const founderImage = "/images/Dheeraj.jpg";
+  const founderImage = "/images/dheeraj.jpg";
 
   return (
     <div className="min-h-screen bg-[#050505] relative selection:bg-red-600 selection:text-white">
@@ -170,7 +170,7 @@ const App: React.FC = () => {
                       referrerPolicy="no-referrer"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.src = "/images/Dheeraj.jpg";
+                        target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=1200";
                       }}
                     />
                     

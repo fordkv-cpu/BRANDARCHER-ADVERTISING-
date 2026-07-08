@@ -102,7 +102,7 @@ const ChatWidget: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-800 bg-zinc-800">
                   <img 
-                    src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=200" 
+                    src="/images/dheeraj.jpg" 
                     alt="Dheeraj Kumar"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
