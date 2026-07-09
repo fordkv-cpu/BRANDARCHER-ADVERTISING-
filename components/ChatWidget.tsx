@@ -26,6 +26,28 @@ const ChatWidget: React.FC = () => {
   
   const linkedinUrl = "https://www.linkedin.com/in/fordkv?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app";
 
+  const [founderImage, setFounderImage] = useState<string>("/images/dheeraj.jpg");
+
+  useEffect(() => {
+    const stored = localStorage.getItem('founderImage');
+    if (stored) {
+      setFounderImage(stored);
+    }
+
+    const handleUpdate = () => {
+      const fresh = localStorage.getItem('founderImage');
+      if (fresh) setFounderImage(fresh);
+    };
+
+    window.addEventListener('founderImageUpdated', handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+
+    return () => {
+      window.removeEventListener('founderImageUpdated', handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
+  }, []);
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -102,10 +124,14 @@ const ChatWidget: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-800 bg-zinc-800">
                   <img 
-                    src="/images/dheeraj.jpg" 
+                    src={founderImage} 
                     alt="Dheeraj Kumar"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=1200";
+                    }}
                   />
                 </div>
                 <div>
